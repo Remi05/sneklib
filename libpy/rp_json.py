@@ -5,7 +5,6 @@
 import sys
 import os
 import json
-import urllib.request
 
 import rp_web
 
