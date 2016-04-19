@@ -7,10 +7,12 @@ import os
 import json
 import urllib.request
 
+import rp_web
+
 
 #Gets a JSON dictionnary from a given URL.
 def getJsonDictionnary(src_url):
-    content = urllib.request.urlopen(src_url).read()
+    content = rp_web.readFile(src_url)
     content_str = str(content, 'utf-8')
     return json.loads(content_str)
 
