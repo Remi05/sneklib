@@ -2,7 +2,6 @@
 #File:   rp_spotify.py
 #Desc.:  A module containing useful functions to gather music information using the Spotify web API.
 
-#TODO: Add smart artist selection (based on name, not popularity).
 #TODO: Add artist' genre and image url?
 #TODO: Add album's genre?
 #TODO: Change tracklist file name to 'Tracklist.txt' instead of '{ALBUM}.txt'?
