@@ -86,12 +86,3 @@ def _mergeSort(vector, tmp, left, right):
 def mergeSort(vector):
     tmp = [0]*len(vector)
     _mergeSort(vector, tmp, 0, len(vector)-1)
-
-
-
-#Test
-vector = [4, 12, 3, 8, 76, 1, 34, 2]
-mergeSort(vector)
-print(vector)
-#insertionSort(vector, True)
-#print(vector)
