@@ -3,6 +3,9 @@
 #Desc.:  Module containing various sorting functions.
 
 
+#TODO: Consider returning a new list instead of modifying the list passed as an argument.
+
+
 #Swaps two elements in a list (vector).
 def swap(vector, i1, i2):
     tmp = vector[i1]
@@ -86,3 +89,45 @@ def _mergeSort(vector, tmp, left, right):
 def mergeSort(vector):
     tmp = [0]*len(vector)
     _mergeSort(vector, tmp, 0, len(vector)-1)
+    
+    
+#Sorts the elements in a list (vector) using Counting sort (use only when the
+#range of values is significantly smaller than the number of values).
+def countingSort(vector):
+    min_val = min(vector)
+    max_val = max(vector)
+    size = max_val - min_val + 1
+    counts = [0]*size
+
+    for i in range(0, len(vector)):
+        counts[vector[i]-min_val] += 1
+
+    cur_pos = 0
+    for j in range(0, size):
+        for k in range(0, counts[j]):
+            vector[cur_pos] = j + min_val
+            cur_pos += 1
+
+
+#Sorts the elements, given as (key, val) tuples, in a list (vector) using Counting sort (use only when the
+#range of values is significantly smaller than the number of values).
+def countingSortWithValues(vector):
+    min_val = min(e[0] for e in vector)
+    max_val = max(e[0] for e in vector)
+    size = max_val - min_val + 1
+    indexed_vals = [[] for i in range(0, size)]
+
+    for i in range(0, len(vector)):
+        indexed_vals[vector[i][0]-min_val].append(vector[i][1])
+
+    cur_pos = 0
+    for j in range(0, size):
+        for k in range(0, len(indexed_vals[j])):
+            vector[cur_pos] = (j + min_val, indexed_vals[j][k])
+            cur_pos += 1
+
+
+#Returns a list containing the value of each (key,value) tuple in the vector
+#(useful when using countingSortWithValues() to keep only the values after sorting).
+def stripKeys(vector):
+    return [tup[1] for tup in vector]
