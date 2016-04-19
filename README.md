@@ -1,2 +1,2 @@
 # libpy
-A personal library of python 3 modules.
+A personal library of Python 3 modules.
