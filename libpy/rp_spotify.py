@@ -2,6 +2,7 @@
 #File:   rp_spotify.py
 #Desc.:  A module containing useful functions to gather music information using the Spotify web API.
 
+#TODO: Add smart artist selection (based on name, not popularity).
 #TODO: Add artist' genre and image url?
 #TODO: Add album's genre?
 #TODO: Change tracklist file name to 'Tracklist.txt' instead of '{ALBUM}.txt'?
@@ -21,26 +22,26 @@ import rp_json
 SPOTIFY_API_URL = 'https://api.spotify.com/v1'
 
 SPOTIFY_SEARCH_TAG = '/search?&q='
-SPOTIFY_TYPE_TAG = '&type='
+SPOTIFY_TYPE_TAG   = '&type='
 
 SPOTIFY_TYPE_ARTIST = 'artist'
-SPOTIFY_TYPE_ALBUM = 'album'
-SPOTIFY_TYPE_TRACK = 'track'
+SPOTIFY_TYPE_ALBUM  = 'album'
+SPOTIFY_TYPE_TRACK  = 'track'
 
-JSON_TAG_ITEMS = 'items'
-JSON_TAG_NAME = 'name'
-JSON_TAG_ID = 'id'
-JSON_TAG_URL = 'url'
-JSON_TAG_TOTAL = 'total'
-JSON_TAG_IMAGES = 'images'
+JSON_TAG_ITEMS      = 'items'
+JSON_TAG_NAME       = 'name'
+JSON_TAG_ID         = 'id'
+JSON_TAG_URL        = 'url'
+JSON_TAG_TOTAL      = 'total'
+JSON_TAG_IMAGES     = 'images'
 JSON_TAG_ALBUM_TYPE = 'album_type'
 
-ALBUM_TYPE_ALBUM = 'album'
-ALBUM_TYPE_SINGLE  = 'single'
+ALBUM_TYPE_ALBUM       = 'album'
+ALBUM_TYPE_SINGLE      = 'single'
 ALBUM_TYPE_COMPILATION = 'compilation'
 
 ALBUM_COVER_EXT = '.jpg'
-MUSIC_INFO_EXT = '.txt'
+MUSIC_INFO_EXT  = '.txt'
 
 NO_RESULTS_ERROR_MESSAGE = 'There were no results found for this search request.'
 
