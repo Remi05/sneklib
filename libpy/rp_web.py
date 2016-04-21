@@ -7,9 +7,12 @@ import urllib.request
 import urllib.parse
 import http.client
 
-HTML_TYPE = 'text/html'
-COMMENT_OPEN_TAG = '<!--'
-COMMENT_CLOSE_TAG = '-->'
+CONTENT_TYPE_HTML       = 'text/html'
+CONTENT_TYPE_CSS        = 'text/css'
+CONTENT_TYPE_JAVASCRIPT = 'text/script'
+
+HTML_COMMENT_OPEN_TAG  = '<!--'
+HTML_COMMENT_CLOSE_TAG = '-->'
 
 
 #TODO: Add URL encoding for search requests.
@@ -22,12 +25,13 @@ def getHostname(url):
 
 #Checks if the file at the given URL is an HTML file.
 def isHtml(url):
-    return urllib.request.urlopen(url).info().get_content_type() == HTML_TYPE
+    return urllib.request.urlopen(url).info().get_content_type() == CONTENT_TYPE_HTML
 
 
 #Checks if the specified index in a given line is within an HTML comment.
 def isInHtmlComment(line, index):
-    return COMMENT_OPEN_TAG in line and COMMENT_CLOSE_TAG in line and line.index(COMMENT_OPEN_TAG) < index and line.index(COMMENT_CLOSE_TAG) > index
+    return HTML_COMMENT_OPEN_TAG in line and HTML_COMMENT_CLOSE_TAG in line and\
+           line.index(HTML_COMMENT_OPEN_TAG) < index and line.index(HTML_COMMENT_CLOSE_TAG) > index
 
 
 #Reads a file from a given URL.
