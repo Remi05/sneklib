@@ -6,9 +6,6 @@
 import random
 
 
-#TODO: Consider returning a new list instead of modifying the list passed as an argument.
-
-
 #Create a list (vector) of the given size and fills it with random numbers between min_val and max_val (both inclusive).
 def createRandomVector(size, min_val, max_val):
     vector = [0]*size
@@ -56,20 +53,6 @@ def insertionSort(vector, reverse = False):
         vector[j] = tmp
 
 
-#Sorts the elements in a list (vector) within the given range (start and end are inclusive)
-#using Insertion sort, can sort in reverse order as well.
-def insertionSort(vector, start, end, reverse = False):
-    if(start < end):
-        for i in range(start+1, end+1):
-            tmp = vector[i]
-            j = i
-            while j > start and ((tmp < vector[j-1] and not reverse) or\
-                                 (tmp > vector[j-1] and reverse)):
-                vector[j] = vector[j-1]
-                j -= 1
-            vector[j] = tmp
-
-
 
 #Merges the vector to be sorted and the temporary vector in the specified range (used for sorting using mergeSort()).
 def _merge(vector, tmp, left, right, right_end):
@@ -102,7 +85,7 @@ def _merge(vector, tmp, left, right, right_end):
         right_end -= 1
 
 
-#Recursive function used to sort sections of a vector (used for sorting using mergeSort()).
+#Recursive function used to sort sections of a vector (used by mergeSort()).
 def _mergeSort(vector, tmp, left, right):
     if right > left:
         center = (left + right) // 2
@@ -118,51 +101,50 @@ def mergeSort(vector):
 
 
 
-DEFAULT_QUICKSORT_CUTOFF = 3;
-
-#Gets the median of the elements of the vector at left, right and (left + right) // 2 to use as pivot for QuickSort. 
-#Also rearranges these elements for the next iteration of QuickSort (called in _quickSort()).
-def _median3(vector, left, right):
-    center = (left + right) // 2
-
-    if(vector[center] < vector[left]):
-        swap(vector, center, left)
-    if(vector[right] < vector[left]):
-        swap(vector, right, left)
-    if(vector[right] < vector[center]):
-        swap(vector, right, center)
-
-    swap(vector, center, right-1)
-    return vector[right-1]
+#Partitions a list (vector) using the Lomuto partition scheme (used for Quicksort and Quickselect).
+def _partition(vector, left, right):
+    pivotIndex = right #Note: We can change how we choose the pivot.
+    pivot = vector[pivotIndex] 
+    swap(vector, pivotIndex, right)
+    i = left
+    for j in range(left, right):
+        if vector[j] <= pivot:
+            swap(vector, i, j)
+            i += 1
+    swap(vector, i, right)
+    return i
 
 
-#Recursive function used to sort sections of a vector (used for sorting using quickSort()).
-def _quickSort(vector, left, right, cutoff):
-    if (left + cutoff) <= right:
-        pivot = _median3(vector, left, right)
-        i = left
-        j = right - 1
-        while True:
-            i+=1
-            while vector[i] < pivot:
-                i+=1
-            j-=1
-            while vector[j] > pivot:
-                j-=1
-            if i < j:
-                swap(vector, i, j)
-            else:
-                break
-        swap(vector, i, right-1)
-        _quickSort(vector, left, i-1, cutoff)
-        _quickSort(vector, i+1, right, cutoff)
-    else:
-        insertionSort(vector, left, right)
+#Recursive function used to find the element that would be at index k if the list was to be sorted (used by quickselect()).
+def _quickselect(vector, left, right, k):
+     if left == right:
+         return vector[left]
+     pivotIndex = _partition(vector, left, right)
+     if k == pivotIndex:
+         return vector[k]
+     elif k < pivotIndex:
+         return _quickselect(vector, left, pivotIndex-1, k)
+     else:
+         return _quickselect(vector, pivotIndex+1, right, k)
 
 
-#Sorts the elements in a list (vector) using QuickSort.
-def quickSort(vector, cutoff = DEFAULT_QUICKSORT_CUTOFF):
-    _quickSort(vector, 0, len(vector)-1, cutoff)
+#Finds the element that would be at index k if the list (vector) was to be
+#sorted (without necessarily sorting the list) using Quickselect.
+def quickselect(vector, k):
+    return _quickselect(vector, 0, len(vector)-1, k)
+
+
+#Recursive function used to sort sections of a list (used by quicksort()).
+def _quicksort(vector, left, right):
+    if left < right:
+        pivot = _partition(vector, left, right)
+        _quicksort(vector, left, pivot-1)
+        _quicksort(vector, pivot+1, right)
+
+
+#Sorts the elements in a list (vector) using Quicksort (standard implementation).
+def quicksort(vector):
+    _quicksort(vector, 0, len(vector)-1)
 
 
 
@@ -211,5 +193,6 @@ def stripKeys(vector):
 
 #Test
 vector = createRandomVector(15, 1, 100)
-quickSort(vector)
+print(vector)
+quicksort(vector)
 print(vector)
