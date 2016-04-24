@@ -53,6 +53,17 @@ def insertionSort(vector, reverse = False):
         vector[j] = tmp
 
 
+#Sorts the elements in a list (vector) using Gnome sort, can sort in reverse order as well.
+def gnomeSort(vector, reverse = False):
+    i = 1
+    while i < len(vector):
+        if i == 0 or ((vector[i-1] <= vector[i] and not reverse) or\
+                      (vector[i-1] >= vector[i] and reverse)):
+            i += 1
+        else:
+            swap(vector, i-1, i)
+            i -= 1
+            
 
 #Merges the vector to be sorted and the temporary vector in the specified range (used for sorting using mergeSort()).
 def _merge(vector, tmp, left, right, right_end):
