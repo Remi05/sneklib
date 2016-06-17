@@ -41,6 +41,50 @@ def bubbleSort(vector, reverse = False):
                 swap(vector, j, j-1)
 
 
+#Sorts the elements in a list (vector) using Comb sort, can sort in reverse order as well.
+def combSort(vector, reverse = False):
+    v_length = len(vector)
+    shrink_factor = 1.3
+    gap = v_length
+    swapped = True
+
+    while gap != 1 or swapped:
+        gap /= shrink_factor
+        gap  = 1 if gap < 1 else int(gap)
+        swapped = False
+        i = 0
+        while (i + gap) < v_length:
+            if (vector[i] > vector[i+gap] and not reverse) or\
+               (vector[i] < vector[i+gap] and reverse):
+                swap(vector, i, i + gap)
+                swapped = True
+            i += 1
+
+
+#Sorts the elements in a list (vector) using Cocktail sort, can sort in reverse order as well.
+def cocktailSort(vector, reverse = False):  
+    left_end  = 0
+    right_end = len(vector) - 1
+    swapped   = True
+
+    while swapped:
+        for i in range(left_end, right_end):
+            if (vector[i] > vector[i+1] and not reverse) or\
+               (vector[i] < vector[i+1] and reverse):
+                swap(vector, i, i+1)
+                swapped = True
+            else:
+                swapped = False
+        right_end -= 1
+
+        for j in range(right_end, left_end, -1):
+            if (vector[j] < vector[j-1] and not reverse) or\
+               (vector[j] > vector[j-1] and reverse):
+                swap(vector, j, j-1)
+                swapped = True
+        left_end += 1
+
+
 #Sorts the elements in a list (vector) using Insertion sort, can sort in reverse order as well.
 def insertionSort(vector, reverse = False):
     for i in range(1, len(vector)):
@@ -63,7 +107,7 @@ def gnomeSort(vector, reverse = False):
         else:
             swap(vector, i-1, i)
             i -= 1
-            
+
 
 #Merges the vector to be sorted and the temporary vector in the specified range (used for sorting using mergeSort()).
 def _merge(vector, tmp, left, right, right_end):
@@ -205,5 +249,5 @@ def stripKeys(vector):
 #Test
 vector = createRandomVector(15, 1, 100)
 print(vector)
-quicksort(vector)
+cocktailSort(vector)
 print(vector)
