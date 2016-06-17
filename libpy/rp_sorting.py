@@ -6,7 +6,7 @@
 import random
 
 
-#Create a list (vector) of the given size and fills it with random numbers between min_val and max_val (both inclusive).
+#Creates a list (vector) of the given size and fills it with random numbers between min_val and max_val (both inclusive).
 def createRandomVector(size, min_val, max_val):
     vector = [0]*size
     for i in range(0, size):
