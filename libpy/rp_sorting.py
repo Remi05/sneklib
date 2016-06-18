@@ -6,7 +6,7 @@
 import random
 
 
-#Creates a list (vector) of the given size and fills it with random numbers between min_val and max_val (both inclusive).
+#Create a list (vector) of the given size and fills it with random numbers between min_val and max_val (both inclusive).
 def createRandomVector(size, min_val, max_val):
     vector = [0]*size
     for i in range(0, size):
@@ -26,19 +26,34 @@ def selectionSort(vector, reverse = False):
     for i in range(0, len(vector)-1):
         min = i
         for j in range(i+1, len(vector)):
-            if (vector[j] < vector[min] and not reverse) or\
-               (vector[j] > vector[min] and reverse):
+            if (not reverse and vector[j] < vector[min]) or\
+               (    reverse and vector[j] > vector[min]):
                 min = j
         swap(vector, i, min)
 
 
 #Sorts the elements in a list (vector) using Bubble sort, can sort in reverse order as well.
 def bubbleSort(vector, reverse = False):
-    for i in range(0, len(vector)-1):
-        for j in range(len(vector)-1, i, -1):
-            if (vector[j] < vector[j-1] and not reverse) or\
-               (vector[j] > vector[j-1] and reverse):
+    v_length = len(vector)
+    for i in range(0, v_length-1):
+        for j in range(v_length-1, i, -1):
+            if (not reverse and vector[j] < vector[j-1]) or\
+               (    reverse and vector[j] > vector[j-1]):
                 swap(vector, j, j-1)
+
+
+#Sorts the elements in a list (vector) using an improved version of Bubble sort, can sort in reverse order as well.
+def improvedBubbleSort(vector, reverse = False):
+    end = len(vector)
+    swapped = True
+    while swapped:
+        swapped = False
+        for i in range(1, end):
+            if (not reverse and vector[i] < vector[i-1]) or\
+               (    reverse and vector[i] > vector[i-1]):
+                swap(vector, i, i-1)
+                swapped = True
+        end -= 1
 
 
 #Sorts the elements in a list (vector) using Comb sort, can sort in reverse order as well.
@@ -54,8 +69,8 @@ def combSort(vector, reverse = False):
         swapped = False
         i = 0
         while (i + gap) < v_length:
-            if (vector[i] > vector[i+gap] and not reverse) or\
-               (vector[i] < vector[i+gap] and reverse):
+            if (not reverse and vector[i] > vector[i+gap]) or\
+               (    reverse and vector[i] < vector[i+gap]):
                 swap(vector, i, i + gap)
                 swapped = True
             i += 1
@@ -69,8 +84,8 @@ def cocktailSort(vector, reverse = False):
 
     while swapped:
         for i in range(left_end, right_end):
-            if (vector[i] > vector[i+1] and not reverse) or\
-               (vector[i] < vector[i+1] and reverse):
+            if (not reverse and vector[i] > vector[i+1]) or\
+               (    reverse and vector[i] < vector[i+1]):
                 swap(vector, i, i+1)
                 swapped = True
             else:
@@ -78,8 +93,8 @@ def cocktailSort(vector, reverse = False):
         right_end -= 1
 
         for j in range(right_end, left_end, -1):
-            if (vector[j] < vector[j-1] and not reverse) or\
-               (vector[j] > vector[j-1] and reverse):
+            if (not reverse and vector[j] < vector[j-1]) or\
+               (    reverse and vector[j] > vector[j-1]):
                 swap(vector, j, j-1)
                 swapped = True
         left_end += 1
@@ -90,8 +105,8 @@ def insertionSort(vector, reverse = False):
     for i in range(1, len(vector)):
         tmp = vector[i]
         j = i
-        while j > 0 and ((tmp < vector[j-1] and not reverse) or\
-                         (tmp > vector[j-1] and reverse)):
+        while j > 0 and ((not reverse and tmp < vector[j-1]) or\
+                         (    reverse and tmp > vector[j-1])):
             vector[j] = vector[j-1]
             j -= 1
         vector[j] = tmp
@@ -99,10 +114,11 @@ def insertionSort(vector, reverse = False):
 
 #Sorts the elements in a list (vector) using Gnome sort, can sort in reverse order as well.
 def gnomeSort(vector, reverse = False):
+    v_length = len(vector)
     i = 1
-    while i < len(vector):
-        if i == 0 or ((vector[i-1] <= vector[i] and not reverse) or\
-                      (vector[i-1] >= vector[i] and reverse)):
+    while i < v_length:
+        if i == 0 or ((not reverse and vector[i-1] <= vector[i]) or\
+                      (    reverse and vector[i-1] >= vector[i])):
             i += 1
         else:
             swap(vector, i-1, i)
@@ -249,5 +265,5 @@ def stripKeys(vector):
 #Test
 vector = createRandomVector(15, 1, 100)
 print(vector)
-cocktailSort(vector)
+improvedBubbleSort(vector)
 print(vector)
