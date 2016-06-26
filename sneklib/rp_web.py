@@ -7,9 +7,9 @@ import urllib.request
 import urllib.parse
 import http.client
 
-CONTENT_TYPE_HTML       = 'text/html'
-CONTENT_TYPE_CSS        = 'text/css'
-CONTENT_TYPE_JAVASCRIPT = 'text/script'
+CONTENT_TYPE_HTML   = 'text/html'
+CONTENT_TYPE_CSS    = 'text/css'
+CONTENT_TYPE_SCRIPT = 'text/script'
 
 
 #TODO: Add URL encoding for search requests.
