@@ -1,3 +1,7 @@
+#Author: Rémi Pelletier
+#File:   rp_data_structures.py
+#Desc.:  A module containing my implementation of various data structures.
+
 
 #Binary search tree implemented using a zero-indexed dynamic array (list).
 class ArrayBST:
@@ -154,9 +158,9 @@ class ArrayBST:
 
 
 
+#Test
 bst = ArrayBST()
 array = [3,34,6,8,2,3,1,9,67]
 for a in array:
     bst.insert(a)
 bst.printInOrder()
-print('')
