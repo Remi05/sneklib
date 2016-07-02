@@ -219,8 +219,8 @@ def quicksort(vector):
 
 
 
-#Sorts the elements in a list (vector) using Counting sort (use only when the
-#range of values is significantly smaller than the number of values).
+#Sorts the elements in a list (vector) using Counting sort (use only 
+#when the range of values is smaller or equal than the number of values).
 def countingSort(vector):
     min_val = min(vector)
     max_val = max(vector)
@@ -237,11 +237,11 @@ def countingSort(vector):
             cur_pos += 1
 
 
-#Sorts the elements, given as (key, val) tuples, in a list (vector) using Counting sort (use only when the
-#range of values is significantly smaller than the number of values).
-def countingSortWithValues(vector):
-    min_val = min(e[0] for e in vector)
-    max_val = max(e[0] for e in vector)
+#Sorts the elements, given as (key, val) tuples, in a list (vector) using Pigeonhole sort 
+#(use only when the range of values is smaller or equal than the number of values).
+def pingeonholeSort(vector):
+    min_val = min(vector, key=lambda e : e[0])
+    max_val = max(vector, key=lambda e : e[0])
     size = max_val - min_val + 1
     indexed_vals = [[] for i in range(0, size)]
 
@@ -256,7 +256,7 @@ def countingSortWithValues(vector):
 
 
 #Returns a list containing the value of each (key,value) tuple in the vector
-#(useful when using countingSortWithValues() to keep only the values after sorting).
+#(useful when using pingeonHoleSort() to keep only the values after sorting).
 def stripKeys(vector):
     return [tup[1] for tup in vector]
 

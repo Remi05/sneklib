@@ -6,7 +6,7 @@ import sys
 import os
 import json
 
-import rp_web
+from . import rp_web
 
 
 #Gets a JSON dictionnary from a given URL.
