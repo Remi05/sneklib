@@ -14,9 +14,9 @@ import json
 import urllib.request
 import difflib
 
-import rp_web
-import rp_files
-import rp_json
+from . import rp_web
+from . import rp_files
+from . import rp_json
 
 
 SPOTIFY_API_URL = 'https://api.spotify.com/v1'
