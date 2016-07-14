@@ -6,7 +6,7 @@ import sys
 import socket
 import rp_tcp
 
-#Fetch the host from the console.
+#Read the host from the console.
 print("Host: ")
 host = input()
 
