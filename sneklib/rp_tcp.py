@@ -103,7 +103,7 @@ class TcpClient:
         if self.socket is None:
             raise SocketCreationFailedException("An error occured when creating the socket.")
         try:
-            self.socket.connect(self.socket_address) #Connect to the client.
+            self.socket.connect(self.socket_address) #Connect to the server.
         except socket.error as e:
             self.close()
             raise SocketConnectionFailedException("An error occured when trying to connect to the remote host.")
