@@ -246,7 +246,7 @@ class BinaryHeap:
         for e in array:
             self.insert(e)
 
-    #Inserts every element of the array given as (value, priority) tuples/lists in the heap.
+    #Inserts every element of the array, given as (value, priority) tuples/lists, in the heap.
     def insertPairArray(self, array):
         for e in array:
             self.insertPair(e[0], e[1])
