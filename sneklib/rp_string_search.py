@@ -1,18 +1,7 @@
-
-#Longest common substring
-#   -Dynamic programming approach
-#   -Prefix tree approach
-#   -k-common substring problem
-
-
-#Substring search
-#   -Rabin-Karp
-#   -Boyer-Moore
-#   -Boyer-Moore-Horspool
-#   -Knuth-Morris-Pratt
-#   -Zhu–Takaoka
-#   -Apostolico–Giancarlo
-#   -Raita
+#Author: Rémi Pelletier
+#File:   rp_string_search.py
+#Desc.:  A module containing my implementation of
+#        various string search related algorithms.
 
 
 #-----------------------Longest common substring problem-----------------------
@@ -139,7 +128,7 @@ def knuthMorrisPrattSearch(s, pattern, find_all = False):
             if cur_pos == pattern_length:
                 if not find_all:
                     return start_pos
-                else:           
+                else:
                     indices.append(start_pos)
                     start_pos += cur_pos - table[cur_pos]
                     cur_pos = table[cur_pos]
