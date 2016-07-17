@@ -6,20 +6,15 @@
 import random
 
 
-#Creates a list of the given size and fills it with random numbers between min_val and max_val (both inclusive).
-def createRandomList(size, min_val, max_val):
-    lst = [0]*size
-    for i in range(0, size):
-        lst[i] = random.randrange(min_val, max_val+1, 1)
-    return lst
-
+#-----------------------------Sorting functions--------------------------------
 
 #Swaps two elements in a list .
 def swap(lst, i1, i2):
     lst[i1], lst[i2] = lst[i2], lst[i1]
 
 
-#Sorts the elements in a list using Selection sort, can sort in reverse order as well.
+#Sorts the elements in a list using Selection sort, 
+#can sort in reverse order as well.
 def selectionSort(lst, reverse = False):
     for i in range(0, len(lst)-1):
         min = i
@@ -30,7 +25,8 @@ def selectionSort(lst, reverse = False):
         swap(lst, i, min)
 
 
-#Sorts the elements in a list using Bubble sort, can sort in reverse order as well.
+#Sorts the elements in a list using Bubble sort, 
+#can sort in reverse order as well.
 def bubbleSort(lst, reverse = False):
     v_length = len(lst)
     for i in range(0, v_length-1):
@@ -40,7 +36,8 @@ def bubbleSort(lst, reverse = False):
                 swap(lst, j, j-1)
 
 
-#Sorts the elements in a list using an improved version of Bubble sort, can sort in reverse order as well.
+#Sorts the elements in a list using an improved version of Bubble sort, 
+#can sort in reverse order as well.
 def improvedBubbleSort(lst, reverse = False):
     end = len(lst)
     swapped = True
@@ -54,8 +51,9 @@ def improvedBubbleSort(lst, reverse = False):
         end -= 1
 
 
-#Function used in oddEvenSort() to perform either an odd-even or an even-odd iteration.
-#Prevents code duplication and conditional statement evaluation at each iteration.
+#Function used in oddEvenSort() to perform either an odd-even 
+#or an even-odd iteration. Prevents code duplication and
+#conditional statement evaluation at each iteration.
 def _oddEvenIter(lst, start, end, reverse = False):
     swapped = False
     for i in range(start, end, 2):
@@ -66,16 +64,20 @@ def _oddEvenIter(lst, start, end, reverse = False):
     return swapped
 
 
-#Sorts the elements in a list using Odd-even sort, can sort in reverse order as well.
+#Sorts the elements in a list using Odd-even sort, 
+#can sort in reverse order as well.
 def oddEvenSort(lst, reverse = False):
     length = len(lst)
     swapped = True
     while swapped:
-        swapped  = _oddEvenIter(lst, 1, length, reverse) #Odd-even iteration
-        swapped |= _oddEvenIter(lst, 2, length, reverse) #Even-odd iteration
+        #Odd-even iteration
+        swapped  = _oddEvenIter(lst, 1, length, reverse)
+        #Even-odd iteration
+        swapped |= _oddEvenIter(lst, 2, length, reverse) 
 
 
-#Sorts the elements in a list using Comb sort, can sort in reverse order as well.
+#Sorts the elements in a list using Comb sort, 
+#can sort in reverse order as well.
 def combSort(lst, reverse = False):
     v_length = len(lst)
     shrink_factor = 1.3
@@ -95,7 +97,8 @@ def combSort(lst, reverse = False):
             i += 1
 
 
-#Sorts the elements in a list using Cocktail sort, can sort in reverse order as well.
+#Sorts the elements in a list using Cocktail sort, 
+#can sort in reverse order as well.
 def cocktailSort(lst, reverse = False):  
     left_end  = 0
     right_end = len(lst) - 1
@@ -119,7 +122,8 @@ def cocktailSort(lst, reverse = False):
         left_end += 1
 
 
-#Sorts the elements in a list using Insertion sort, can sort in reverse order as well.
+#Sorts the elements in a list using Insertion sort, 
+#can sort in reverse order as well.
 def insertionSort(lst, reverse = False):
     for i in range(1, len(lst)):
         tmp = lst[i]
@@ -131,7 +135,8 @@ def insertionSort(lst, reverse = False):
         lst[j] = tmp
 
 
-#Sorts the elements in a list using Gnome sort, can sort in reverse order as well.
+#Sorts the elements in a list using Gnome sort,
+#can sort in reverse order as well.
 def gnomeSort(lst, reverse = False):
     v_length = len(lst)
     i = 1
@@ -144,7 +149,8 @@ def gnomeSort(lst, reverse = False):
             i -= 1
 
 
-#Merges the list to be sorted and the temporary list in the specified range (used for sorting using mergeSort()).
+#Merges the list to be sorted and the temporary list in the specified range
+#(used for sorting using mergeSort()).
 def _merge(lst, tmp, left, right, right_end):
     left_end = right - 1
     tmpPos = left
@@ -191,7 +197,8 @@ def mergeSort(lst):
 
 
 
-#Partitions a list using the Lomuto partition scheme (used for Quicksort and Quickselect).
+#Partitions a list using the Lomuto partition scheme
+#(used for Quicksort and Quickselect).
 def _partition(lst, left, right):
     pivotIndex = right #Note: We can change how we choose the pivot.
     pivot = lst[pivotIndex] 
@@ -205,7 +212,8 @@ def _partition(lst, left, right):
     return i
 
 
-#Recursive function used to find the element that would be at index k if the list was to be sorted (used by quickselect()).
+#Recursive function used to find the element that would be at
+#index k if the list was to be sorted (used by quickselect()).
 def _quickselect(lst, left, right, k):
      if left == right:
          return lst[left]
@@ -235,7 +243,6 @@ def _quicksort(lst, left, right):
 #Sorts the elements in a list using Quicksort (standard implementation).
 def quicksort(lst):
     _quicksort(lst, 0, len(lst)-1)
-
 
 
 #Sorts the elements in a list using Counting sort (use only 
@@ -281,8 +288,85 @@ def stripKeys(lst):
 
 
 
-#Test
-lst = createRandomList(15, 1, 100)
-print(lst)
-oddEvenSort(lst)
-print(lst)
+
+
+#-----------------------------------Tests--------------------------------------
+
+#Creates a list of the given size and fills it with random
+#numbers between min_val and max_val (both inclusive).
+def createRandomList(size, min_val, max_val):
+    lst = [0]*size
+    for i in range(0, size):
+        lst[i] = random.randrange(min_val, max_val+1, 1)
+    return lst
+
+
+#Returns a boolean indicating if the list is sorted
+#(can verify if a list is sorted in reverse order as well).
+def isSorted(lst, reverse = False):
+    length = len(lst)
+    if lst is None or length == 0:
+        return False
+    for i in range(0, length-1):
+        if not reverse and lst[i] > lst[i+1] or\
+           reverse and lst[i] < lst[i+1]:
+            return False
+    return True
+
+
+SIZES  = [10, 50, 250]
+RANGES = [(-100, -10), (-50, 50), (10, 100)]
+
+#Tests a sorting function all the cominations
+#on sizes and ranges given in SIZES and RANGES.
+def executeTests(func, args):
+    nb_tests = 0
+    passed_tests = 0
+    for size in SIZES:
+        for val_range in RANGES:
+            nb_tests += 1
+            min_val, max_val = val_range
+            lst = createRandomList(size, min_val, max_val)
+            func_args = (lst, *args)
+            try:
+                func(*func_args)
+            except Exception as e:
+                print('An error occured with arguments : ' + str(func_args) + '\n')
+                print('Error : ' + str(e))
+                continue
+            if not isSorted(*func_args):
+                print('Failed test with arguments : ' + str(func_args) + '\n')
+            else:
+                passed_tests += 1
+    return passed_tests, nb_tests
+
+
+#Tests a given sorting function.
+def testFunction(func, hasReverse):
+    print('Testing : ' + func.__name__)
+    passed, total = 0, 0
+    if hasReverse:
+        p1, t1 = executeTests(func, (False,))
+        p2, t2 = executeTests(func, (True,))
+        passed, total = p1+p2, t1+t2
+    else:
+        passed, total = executeTests(func, ())
+    print(str(passed) + '/' + str(total) + ' tests passed.\n')
+
+
+SORTING_FUNTIONS = [ (bubbleSort,    True), (cocktailSort,       True),  
+                     (combSort,      True), (countingSort,       False),
+                     (gnomeSort,     True), (improvedBubbleSort, True),
+                     (insertionSort, True), (mergeSort,          False),
+                     (oddEvenSort,   True), (quicksort,          False),
+                     (selectionSort, True) ]
+  
+#Runs tests for all the functions in SORTING_FUNCTIONS.
+def runTests():
+    for func in SORTING_FUNTIONS:
+        testFunction(*func)
+
+
+
+#Program entry point.
+runTests()
