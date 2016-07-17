@@ -317,9 +317,9 @@ def isSorted(lst, reverse = False):
 SIZES  = [10, 50, 250]
 RANGES = [(-100, -10), (-50, 50), (10, 100)]
 
-#Tests a sorting function all the cominations
-#on sizes and ranges given in SIZES and RANGES.
-def executeTests(func, args):
+#Runs tests on a sorting function using all the cominations
+#of sizes and ranges given in SIZES and RANGES.
+def runTests(func, args):
     nb_tests = 0
     passed_tests = 0
     for size in SIZES:
@@ -346,14 +346,16 @@ def testFunction(func, hasReverse):
     print('Testing : ' + func.__name__)
     passed, total = 0, 0
     if hasReverse:
-        p1, t1 = executeTests(func, (False,))
-        p2, t2 = executeTests(func, (True,))
+        p1, t1 = runTests(func, (False,))
+        p2, t2 = runTests(func, (True,))
         passed, total = p1+p2, t1+t2
     else:
-        passed, total = executeTests(func, ())
+        passed, total = runTests(func, ())
     print(str(passed) + '/' + str(total) + ' tests passed.\n')
 
 
+#pigeonholeSort is not in this list since it uses 
+#(key, value) pairs instead of a standard list.
 SORTING_FUNTIONS = [ (bubbleSort,    True), (cocktailSort,       True),  
                      (combSort,      True), (countingSort,       False),
                      (gnomeSort,     True), (improvedBubbleSort, True),
@@ -361,12 +363,12 @@ SORTING_FUNTIONS = [ (bubbleSort,    True), (cocktailSort,       True),
                      (oddEvenSort,   True), (quicksort,          False),
                      (selectionSort, True) ]
   
-#Runs tests for all the functions in SORTING_FUNCTIONS.
-def runTests():
+#Tests all the functions in SORTING_FUNCTIONS.
+def testAllFunctions():
     for func in SORTING_FUNTIONS:
         testFunction(*func)
 
 
 
 #Program entry point.
-runTests()
+testAllFunctions()
