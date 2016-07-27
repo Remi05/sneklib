@@ -47,10 +47,6 @@ NO_RESULTS_ERROR_MESSAGE = 'There were no results found for this search request.
 
 
 class Artist:
-    name = ''
-    id = ''
-    albums = []
-
     def __init__(self, artist_name, artist_id, albums_list):
         self.name = artist_name
         self.id = artist_id
@@ -58,12 +54,6 @@ class Artist:
 
 
 class Album:
-    name = ''
-    id = ''
-    album_type = ''
-    cover_url = ''
-    tracks = []
-
     def __init__(self, album_name, album_id, album_type_str, album_cover_url, album_tracks):
         self.name = album_name
         self.id = album_id
@@ -73,8 +63,6 @@ class Album:
 
 
 class Track:
-    name = ''
-    id = ''
     def __init__(self, track_name, track_id):
         self.name = track_name
         self.id = track_id
