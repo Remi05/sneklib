@@ -16,7 +16,7 @@ class SocketConnectionFailedException(Exception):
     pass
 
 
-#Creates a TCP/IP socket compatible vs IPV4 and IPV6.
+#Creates a TCP/IP socket compatible with IPV4 and IPV6.
 #Returns a tuple containing a socket instance and the associated address
 #if it was created successfully or a tuple containing (None,None) otherwise. 
 def _createSocket(host, port):
