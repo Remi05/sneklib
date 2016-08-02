@@ -35,7 +35,7 @@ def _createSocket(host, port):
 #A very basic TCP server implementation.
 class TcpServer:
     def __init__(self, host = None, port = None):
-         self.host = host if not host is None else socket.gethostbyname(socket.gethostname())
+         self.host = host if host is not None else socket.gethostbyname(socket.gethostname())
          self.port = port
          self.socket = None
          self.current_connection = None
@@ -56,32 +56,32 @@ class TcpServer:
     #Closes and destroys the TCP/IP socket (also closes the
     #connection with currently connected client if there is one).
     def shutdown(self):
-        if not self.socket is None:
-            if not self.current_connection is None:
+        if self.socket is not None:
+            if self.current_connection is not None:
                 self.close()
             self.socket.close()
             self.socket = None
 
     #Waits for a client to connect (stalling function).
     def accept(self):
-        if not self.socket is None:
+        if self.socket is not None:
             self.current_connection, self.current_client_address = self.socket.accept()
     
     #Sends the given data to the currently connected client.
     def send(self, data):
-        if not self.current_connection is None:
+        if self.current_connection is not None:
             self.current_connection.send(data)
                
     #Waits for the currenly connected client to send data and returns it.      
     def receive(self, buffer_size = 256):
         data = None
-        if not self.current_connection is None:
+        if self.current_connection is not None:
              data = self.current_connection.recv(buffer_size)
         return data
 
     #Closes the connection with the currently connected client.
     def close(self):
-        if not self.current_connection is None:
+        if self.current_connection is not None:
             self.current_connection.close()
             self.current_connection = None
             self.current_client_address = None
@@ -110,19 +110,19 @@ class TcpClient:
 
     #Sends the given data to the currently connected server.
     def send(self):
-        if not self.socket is None:
+        if self.socket is not None:
             self.socket.send(data)
 
     #Waits for the currenly connected server to send data and returns it. 
     def receive(self, buffer_size = 256):
         data = None
-        if not self.socket is None:
+        if self.socket is not None:
              data = self.socket.recv(buffer_size)
         return data
 
     #Closes the connection with the currently connected server.
     def close(self):
-        if not self.socket is None:
+        if self.socket is not None:
             self.socket.close()
             self.socket = None
             self.socket_address = None
