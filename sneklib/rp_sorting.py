@@ -15,7 +15,7 @@ def swap(lst, i1, i2):
 
 #Sorts the elements in a list using Selection sort, 
 #can sort in reverse order as well.
-def selectionSort(lst, reverse = False):
+def selection_sort(lst, reverse = False):
     for i in range(0, len(lst)-1):
         min = i
         for j in range(i+1, len(lst)):
@@ -27,7 +27,7 @@ def selectionSort(lst, reverse = False):
 
 #Sorts the elements in a list using Bubble sort, 
 #can sort in reverse order as well.
-def bubbleSort(lst, reverse = False):
+def bubble_sort(lst, reverse = False):
     v_length = len(lst)
     for i in range(0, v_length-1):
         for j in range(v_length-1, i, -1):
@@ -38,7 +38,7 @@ def bubbleSort(lst, reverse = False):
 
 #Sorts the elements in a list using an improved version of Bubble sort, 
 #can sort in reverse order as well.
-def improvedBubbleSort(lst, reverse = False):
+def improved_bubble_sort(lst, reverse = False):
     end = len(lst)
     swapped = True
     while swapped:
@@ -51,10 +51,10 @@ def improvedBubbleSort(lst, reverse = False):
         end -= 1
 
 
-#Function used in oddEvenSort() to perform either an odd-even 
+#Function used in odd_even_sort() to perform either an odd-even 
 #or an even-odd iteration. Prevents code duplication and
 #conditional statement evaluation at each iteration.
-def _oddEvenIter(lst, start, end, reverse = False):
+def _odd_even_iter(lst, start, end, reverse = False):
     swapped = False
     for i in range(start, end, 2):
         if (not reverse and lst[i] < lst[i-1]) or\
@@ -66,19 +66,19 @@ def _oddEvenIter(lst, start, end, reverse = False):
 
 #Sorts the elements in a list using Odd-even sort, 
 #can sort in reverse order as well.
-def oddEvenSort(lst, reverse = False):
+def odd_even_sort(lst, reverse = False):
     length = len(lst)
     swapped = True
     while swapped:
         #Odd-even iteration
-        swapped  = _oddEvenIter(lst, 1, length, reverse)
+        swapped  = _odd_even_iter(lst, 1, length, reverse)
         #Even-odd iteration
-        swapped |= _oddEvenIter(lst, 2, length, reverse) 
+        swapped |= _odd_even_iter(lst, 2, length, reverse) 
 
 
 #Sorts the elements in a list using Comb sort, 
 #can sort in reverse order as well.
-def combSort(lst, reverse = False):
+def comb_sort(lst, reverse = False):
     v_length = len(lst)
     shrink_factor = 1.3
     gap = v_length
@@ -99,7 +99,7 @@ def combSort(lst, reverse = False):
 
 #Sorts the elements in a list using Cocktail sort, 
 #can sort in reverse order as well.
-def cocktailSort(lst, reverse = False):  
+def cocktail_sort(lst, reverse = False):  
     left_end  = 0
     right_end = len(lst) - 1
     swapped   = True
@@ -124,7 +124,7 @@ def cocktailSort(lst, reverse = False):
 
 #Sorts the elements in a list using Insertion sort, 
 #can sort in reverse order as well.
-def insertionSort(lst, reverse = False):
+def insertion_sort(lst, reverse = False):
     for i in range(1, len(lst)):
         tmp = lst[i]
         j = i
@@ -137,7 +137,7 @@ def insertionSort(lst, reverse = False):
 
 #Sorts the elements in a list using Gnome sort,
 #can sort in reverse order as well.
-def gnomeSort(lst, reverse = False):
+def gnome_sort(lst, reverse = False):
     v_length = len(lst)
     i = 1
     while i < v_length:
@@ -150,7 +150,7 @@ def gnomeSort(lst, reverse = False):
 
 
 #Merges the list to be sorted and the temporary list in the specified range
-#(used for sorting using mergeSort()).
+#(used for sorting using merge_sort()).
 def _merge(lst, tmp, left, right, right_end):
     left_end = right - 1
     tmpPos = left
@@ -181,19 +181,19 @@ def _merge(lst, tmp, left, right, right_end):
         right_end -= 1
 
 
-#Recursive function used to sort sections of a list (used by mergeSort()).
-def _mergeSort(lst, tmp, left, right):
+#Recursive function used to sort sections of a list (used by merge_sort()).
+def _merge_sort(lst, tmp, left, right):
     if right > left:
         center = (left + right) // 2
-        _mergeSort(lst, tmp, left, center)
-        _mergeSort(lst, tmp, center + 1, right)
+        _merge_sort(lst, tmp, left, center)
+        _merge_sort(lst, tmp, center + 1, right)
         _merge(lst, tmp, left, center + 1, right)
 
 
 #Sorts the elements in a list using Merge sort.
-def mergeSort(lst):
+def merge_sort(lst):
     tmp = [0]*len(lst)
-    _mergeSort(lst, tmp, 0, len(lst)-1)
+    _merge_sort(lst, tmp, 0, len(lst)-1)
 
 
 
@@ -247,7 +247,7 @@ def quicksort(lst):
 
 #Sorts the elements in a list using Counting sort (use only 
 #when the range of values is smaller or equal than the number of values).
-def countingSort(lst):
+def counting_sort(lst):
     min_val = min(lst)
     max_val = max(lst)
     size = max_val - min_val + 1
@@ -265,7 +265,7 @@ def countingSort(lst):
 
 #Sorts the elements, given as (key, val) tuples, in a list using Pigeonhole sort 
 #(use only when the range of values is smaller or equal than the number of values).
-def pingeonholeSort(lst):
+def pingeonhole_sort(lst):
     min_val = min(lst, key=lambda e : e[0])
     max_val = max(lst, key=lambda e : e[0])
     size = max_val - min_val + 1
@@ -282,8 +282,8 @@ def pingeonholeSort(lst):
 
 
 #Returns a list containing the value of each (key,value) tuple in the list
-#(useful when using pingeonHoleSort() to keep only the values after sorting).
-def stripKeys(lst):
+#(useful when using pingeon_hole_sort() to keep only the values after sorting).
+def strip_keys(lst):
     return [tup[1] for tup in lst]
 
 
@@ -294,7 +294,7 @@ def stripKeys(lst):
 
 #Creates a list of the given size and fills it with random
 #numbers between min_val and max_val (both inclusive).
-def createRandomList(size, min_val, max_val):
+def create_random_list(size, min_val, max_val):
     lst = [0]*size
     for i in range(0, size):
         lst[i] = random.randrange(min_val, max_val+1, 1)
@@ -303,7 +303,7 @@ def createRandomList(size, min_val, max_val):
 
 #Returns a boolean indicating if the list is sorted
 #(can verify if a list is sorted in reverse order as well).
-def isSorted(lst, reverse = False):
+def is_sorted(lst, reverse = False):
     length = len(lst)
     if lst is None or length == 0:
         return False
@@ -319,14 +319,14 @@ RANGES = [(-100, -10), (-50, 50), (10, 100)]
 
 #Runs tests on a sorting function using all the cominations
 #of sizes and ranges given in SIZES and RANGES.
-def runTests(func, args):
+def run_tests(func, args):
     nb_tests = 0
     passed_tests = 0
     for size in SIZES:
         for val_range in RANGES:
             nb_tests += 1
             min_val, max_val = val_range
-            lst = createRandomList(size, min_val, max_val)
+            lst = create_random_list(size, min_val, max_val)
             func_args = (lst, *args)
             try:
                 func(*func_args)
@@ -334,7 +334,7 @@ def runTests(func, args):
                 print('An error occured with arguments : ' + str(func_args) + '\n')
                 print('Error : ' + str(e))
                 continue
-            if not isSorted(*func_args):
+            if not is_sorted(*func_args):
                 print('Failed test with arguments : ' + str(func_args) + '\n')
             else:
                 passed_tests += 1
@@ -342,33 +342,33 @@ def runTests(func, args):
 
 
 #Tests a given sorting function.
-def testFunction(func, hasReverse):
+def test_function(func, has_reverse):
     print('Testing : ' + func.__name__)
     passed, total = 0, 0
-    if hasReverse:
-        p1, t1 = runTests(func, (False,))
-        p2, t2 = runTests(func, (True,))
+    if has_reverse:
+        p1, t1 = run_tests(func, (False,))
+        p2, t2 = run_tests(func, (True,))
         passed, total = p1+p2, t1+t2
     else:
-        passed, total = runTests(func, ())
+        passed, total = run_tests(func, ())
     print(str(passed) + '/' + str(total) + ' tests passed.\n')
 
 
 #pigeonholeSort is not in this list since it uses 
 #(key, value) pairs instead of a standard list.
-SORTING_FUNTIONS = [ (bubbleSort,    True), (cocktailSort,       True),  
-                     (combSort,      True), (countingSort,       False),
-                     (gnomeSort,     True), (improvedBubbleSort, True),
-                     (insertionSort, True), (mergeSort,          False),
-                     (oddEvenSort,   True), (quicksort,          False),
-                     (selectionSort, True) ]
+SORTING_FUNTIONS = [ (bubble_sort,    True), (cocktail_sort,        True),  
+                     (comb_sort,      True), (counting_sort,        False),
+                     (gnome_sort,     True), (improved_bubble_sort, True),
+                     (insertion_sort, True), (merge_sort,           False),
+                     (odd_even_sort,  True), (quicksort,            False),
+                     (selection_sort, True) ]
   
 #Tests all the functions in SORTING_FUNCTIONS.
-def testAllFunctions():
-    for func in SORTING_FUNTIONS:
-        testFunction(*func)
+def test_all_functions():
+    for func, has_reverse in SORTING_FUNTIONS:
+        test_function(func, has_reverse)
 
 
 
 #Program entry point.
-testAllFunctions()
+test_all_functions()

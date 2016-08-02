@@ -17,7 +17,7 @@
 #____________________________Rabin-Karp algorithm______________________________
 
 #Rolling hash function (used by default in my implementation of Rabin-Karp)
-def rkRollingHash(new_str, old_str = None, old_hash = None):
+def rk_rolling_hash(new_str, old_str = None, old_hash = None):
     length = len(new_str)
     if old_str == None or old_hash == None:
         return sum(ord(new_str[-1-i]) * (101 ** i) for i in range(length))
@@ -28,7 +28,7 @@ def rkRollingHash(new_str, old_str = None, old_hash = None):
 #Finds the first or all the occurences of a pattern in a string using Rabin-Karp.
 #find_all = True  -> found : [indices]   / not found : []
 #find_all = False -> found : index       / not found : None
-def rabinKarpSearch(s, pattern, find_all = False, rolling_hash = rkRollingHash):
+def rabin_karp_search(s, pattern, find_all = False, rolling_hash = rk_rolling_hash):
     m = len(pattern)
     n = len(s)
 
@@ -55,7 +55,7 @@ def rabinKarpSearch(s, pattern, find_all = False, rolling_hash = rkRollingHash):
 #The indices are returned in a dictionnary where the key is the pattern and the value is given as follows:
 #find_all = True  -> found : [indices]   / not found : []
 #find_all = False -> found : index       / not found : None
-def rabinKarpSetSearch(s, pattern_set, find_all = False, rolling_hash = rkRollingHash):
+def rabin_karp_set_search(s, pattern_set, find_all = False, rolling_hash = rk_rolling_hash):
     hash_dict = { rolling_hash(pattern) : pattern for pattern in pattern_set }
     hash_set = hash_dict.keys()
     indices_dict = { pattern : [] if find_all else None for pattern in pattern_set }
@@ -87,7 +87,7 @@ def rabinKarpSetSearch(s, pattern_set, find_all = False, rolling_hash = rkRollin
 #________________________Knuth-Morris-Pratt algorithm__________________________
 
 #Creates the partial match table used in the KMP algorithm.
-def createPartialMatchTable(pattern):
+def create_partial_match_table(pattern):
     pattern_length = len(pattern)
     table = [0] * (pattern_length + 1)
     table[0] = -1
@@ -113,8 +113,8 @@ def createPartialMatchTable(pattern):
 #Finds the first or all the occurences of a pattern in a string using Knuth-Morris-Pratt (KMP).
 #find_all = True  -> found : [indices]   / not found : []
 #find_all = False -> found : index       / not found : None
-def knuthMorrisPrattSearch(s, pattern, find_all = False):
-    table     = createPartialMatchTable(pattern)
+def kmp_search(s, pattern, find_all = False):
+    table     = create_partial_match_table(pattern)
     start_pos = 0
     cur_pos   = 0
     indices   = []
@@ -159,9 +159,4 @@ pattern = "dldj"
 pattern_set = set(["abba", "djgk", "bbbb", "dldj", "kkkk"])
 string = "abbbbbbcdaaaabadjgkldldjabbbbacbaabbabbkla"
 
-#indices = rabinKarpSetSearch(string, pattern_set)
-
-#for key in indices.keys():
-#    print(key + " : " + str(indices[key]))
-
-print(knuthMorrisPrattSearch(string, pattern, True))
+print(kmp_search(string, pattern, True))
