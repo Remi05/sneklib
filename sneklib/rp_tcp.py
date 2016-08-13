@@ -62,17 +62,17 @@ class TcpServer:
             self.socket.close()
             self.socket = None
 
-    #Waits for a client to connect (stalling function).
+    #Waits for a client to connect (blocking function).
     def accept(self):
         if self.socket is not None:
             self.current_connection, self.current_client_address = self.socket.accept()
     
-    #Sends the given data to the currently connected client.
+    #Sends all the given data to the currently connected client.
     def send(self, data):
         if self.current_connection is not None:
-            self.current_connection.send(data)
+            self.current_connection.sendall(data)
                
-    #Waits for the currenly connected client to send data and returns it.      
+    #Waits for the currenly connected client to send data and returns it. 
     def receive(self, buffer_size = 256):
         data = None
         if self.current_connection is not None:
@@ -111,9 +111,9 @@ class TcpClient:
     #Sends the given data to the currently connected server.
     def send(self):
         if self.socket is not None:
-            self.socket.send(data)
+            self.socket.sendall(data)
 
-    #Waits for the currenly connected server to send data and returns it. 
+    #Waits for the currenly connected client to send data and returns it.   
     def receive(self, buffer_size = 256):
         data = None
         if self.socket is not None:
