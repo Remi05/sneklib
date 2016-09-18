@@ -1,15 +1,15 @@
 # sneklib   
 **Author :** Rémi Pelletier   
-**Description :** A personal package of Python 3 modules.
+**Description :** Algorithms and data structures package written in Python 3.
 
 ## Goal  
-Produce collections of functions and classes on various topics in the form of simple Python 3 modules.  
+Develop a package containing the most popular algorithms and data structures using Python 3.  
 
 ## Motivations  
-- Improving my Python programming skills. 
-- Improving my knowledge in various fields through implementation.
+- Improving my Python programming skills.
+- Improving my knowledge of data structures.
 - Improving my skills of algorithm development and analysis.
-- Learning more about new algorithms and  associated concepts.
+- Learning more about new algorithms and associated concepts.
 - Reflecting on the process of algorithm implementation.
 
 ## License  
