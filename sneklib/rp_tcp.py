@@ -109,7 +109,7 @@ class TcpClient:
             raise SocketConnectionError("An error occured when trying to connect to the remote host.")
 
     #Sends the given data to the currently connected server.
-    def send(self):
+    def send(self, data):
         if self.socket is not None:
             self.socket.sendall(data)
 
