@@ -4,6 +4,8 @@
 
 
 import random
+import itertools
+import rp_data_structures
 
 
 #-----------------------------Sorting functions--------------------------------
@@ -149,6 +151,22 @@ def gnome_sort(lst, reverse = False):
             i -= 1
 
 
+#Sorts the elements in a list using Heap sort.
+def heap_sort(lst):
+    heap = rp_data_structures.BinaryHeap()
+    heap.insertArray(lst)
+    i = 0
+    while not heap.isEmpty():
+        lst[i] = heap.pop()
+        i += 1
+
+#Sorts the elements in a list using Tree sort.
+def tree_sort(lst):
+    bst = rp_data_structures.ArrayBST()
+    bst.insertArray(lst)
+    lst[:] = bst.getSortedArray()
+
+
 #Merges the list to be sorted and the temporary list in the specified range
 #(used for sorting using merge_sort()).
 def _merge(lst, tmp, left, right, right_end):
@@ -248,8 +266,7 @@ def quicksort(lst):
 #Sorts the elements in a list using Counting sort (use only 
 #when the range of values is smaller or equal than the number of values).
 def counting_sort(lst):
-    min_val = min(lst)
-    max_val = max(lst)
+    min_val, max_val = min(lst), max(lst)
     size = max_val - min_val + 1
     counts = [0]*size
 
@@ -261,6 +278,35 @@ def counting_sort(lst):
         for k in range(0, counts[j]):
             lst[cur_pos] = j + min_val
             cur_pos += 1
+
+
+#Sorts the elements in a list usin Bucket sort (use only 
+#when the range of values is smaller or equal than the number of values). 
+def bucket_sort(lst, nb_buckets=10, cutoff=0):
+    if nb_buckets == 1:
+        insertion_sort(lst)
+        return
+
+    min_val, max_val = min(lst), max(lst)
+    if min_val == max_val:
+        return
+
+    val_range = max_val - min_val
+    bucket_range = val_range // nb_buckets + 1
+    buckets = [[] for _ in range(nb_buckets)]
+
+    for val in lst:
+        buckets[(val-min_val) // bucket_range].append(val)
+
+    for bucket in buckets:
+        bckt_len = len(bucket)
+        if bckt_len > cutoff:
+            bucket_sort(bucket, nb_buckets, cutoff)
+        else:
+            insertion_sort(bucket, 0, bckt_len-1)
+
+    lst[:] = list(itertools.chain.from_iterable(buckets))
+    
 
 
 #Sorts the elements, given as (key, val) tuples, in a list using Pigeonhole sort 
