@@ -234,7 +234,7 @@ class BinaryHeap:
 
     #Inserts an new entry in the heap.
     def insertPair(self, value, priority):
-        if self.__cur_size == self.__max_size:
+        if self.__cur_size == self.__max_size-1:
             self.__enlarge()
         hole = self.__cur_size + 1
         self.__cur_size += 1
@@ -253,15 +253,22 @@ class BinaryHeap:
 
 
 
+class SuffixTree:
+    def __init__(self, string):
+        self.string = string
+
+
+
+
 
 #Test
-array = [3,34,6,8,2,3,1,9,67]
+#array = [3,34,6,8,2,3,1,9,67]
 
 #bst = ArrayBST()
 #bst.insertArray(array)
 #print(bst.getSortedArray())
 
-heap = BinaryHeap()
-heap.insertArray(array)
-while not heap.isEmpty():
-    print(heap.pop())
+#heap = BinaryHeap()
+#heap.insertArray(array)
+#while not heap.isEmpty():
+#    print(heap.pop())
