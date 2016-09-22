@@ -137,6 +137,19 @@ def insertion_sort(lst, reverse = False):
         lst[j] = tmp
 
 
+#Sorts the elements in a list, within the given range (start and end
+#are both included), using Insertion sort, can sort in reverse order as well.
+def insertion_sort_range(lst, start, end, reverse = False):
+    for i in range(start+1, end+1):
+        tmp = lst[i]
+        j = i
+        while j > start and ((not reverse and tmp < lst[j-1]) or\
+                             (    reverse and tmp > lst[j-1])):
+            lst[j] = lst[j-1]
+            j -= 1
+        lst[j] = tmp
+
+
 #Sorts the elements in a list using Gnome sort,
 #can sort in reverse order as well.
 def gnome_sort(lst, reverse = False):
@@ -159,6 +172,7 @@ def heap_sort(lst):
     while not heap.isEmpty():
         lst[i] = heap.pop()
         i += 1
+
 
 #Sorts the elements in a list using Tree sort.
 def tree_sort(lst):
@@ -283,7 +297,7 @@ def counting_sort(lst):
 #Sorts the elements in a list usin Bucket sort (use only 
 #when the range of values is smaller or equal than the number of values). 
 def bucket_sort(lst, nb_buckets=10, cutoff=0):
-    if nb_buckets == 1:
+    if nb_buckets == 1 or len(lst) <= cutoff:
         insertion_sort(lst)
         return
 
@@ -299,11 +313,7 @@ def bucket_sort(lst, nb_buckets=10, cutoff=0):
         buckets[(val-min_val) // bucket_range].append(val)
 
     for bucket in buckets:
-        bckt_len = len(bucket)
-        if bckt_len > cutoff:
-            bucket_sort(bucket, nb_buckets, cutoff)
-        else:
-            insertion_sort(bucket, 0, bckt_len-1)
+        bucket_sort(bucket, nb_buckets, cutoff)
 
     lst[:] = list(itertools.chain.from_iterable(buckets))
     
@@ -402,12 +412,13 @@ def test_function(func, has_reverse):
 
 #pigeonholeSort is not in this list since it uses 
 #(key, value) pairs instead of a standard list.
-SORTING_FUNTIONS = [ (bubble_sort,    True), (cocktail_sort,        True),  
-                     (comb_sort,      True), (counting_sort,        False),
-                     (gnome_sort,     True), (improved_bubble_sort, True),
-                     (insertion_sort, True), (merge_sort,           False),
-                     (odd_even_sort,  True), (quicksort,            False),
-                     (selection_sort, True) ]
+SORTING_FUNTIONS = [ (bubble_sort,    True),  (bucket_sort,          False), 
+                     (cocktail_sort,  True),  (comb_sort,            True), 
+                     (counting_sort,  False), (gnome_sort,           True),
+                     (heap_sort,      False), (improved_bubble_sort, True),
+                     (insertion_sort, True),  (merge_sort,           False),
+                     (odd_even_sort,  True),  (quicksort,            False),
+                     (selection_sort, True),  (tree_sort,            False) ]
   
 #Tests all the functions in SORTING_FUNCTIONS.
 def test_all_functions():
