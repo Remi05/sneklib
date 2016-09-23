@@ -91,6 +91,40 @@ def upper_bound(arr, x, lo = 0, hi = -1):
 
 
 
+#-----------------Max subarray problem (Kadane's algorithm)--------------------
+
+#Computes the maximum subarray using Kadane's algorithm
+#and returns the start and end indices.
+def max_subarray_range(array):
+    max_ending_here = 0
+    max_so_far      = 0
+    start = 0
+    end   = 0
+    for i in range(len(array)):
+        if max_ending_here + array[i] <= 0:
+            start = i + 1
+        else:
+            max_ending_here += array[i]
+        if max_ending_here > max_so_far:
+            max_so_far = max_ending_here
+            end = i
+    return start, end
+
+
+#Returns the maximum subarray computed using Kadane's algorithm.
+def max_subarray(array):
+    start, end = max_subarray_range(array)
+    return array[start:end+1]
+
+
+#Returns the sum of the elements in the maximum
+#subarray computed using Kadane's algorithm.
+def max_subarray_sum(array):
+    return sum(max_subarray(array))
+
+
+
+
 #Tests
 arr = [1, 4, 7, 8, 15, 21, 23, 34]
 x = 22

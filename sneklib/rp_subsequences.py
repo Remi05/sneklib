@@ -6,40 +6,6 @@
 import math
 
 
-#-----------------Max subarray problem (Kadane's algorithm)--------------------
-
-#Computes the maximum subarray using Kadane's algorithm
-#and returns the start and end indices.
-def max_subarray_range(array):
-    max_ending_here = 0
-    max_so_far      = 0
-    start = 0
-    end   = 0
-    for i in range(len(array)):
-        if max_ending_here + array[i] <= 0:
-            start = i + 1
-        else:
-            max_ending_here = max_ending_here + array[i]
-        if max_ending_here > max_so_far:
-            max_so_far = max_ending_here
-            end = i
-    return start, end
-
-
-#Returns the maximum subarray computed using Kadane's algorithm.
-def max_subarray(array):
-    start, end = max_subarray_range(array)
-    return array[start:end+1]
-
-
-#Returns the sum of the elements in the maximum
-#subarray computed using Kadane's algorithm.
-def max_subarray_sum(array):
-    return sum(max_subarray(array))
-
-
-
-
 #---------------------Longest common subsequence problem-----------------------
 
 #Builds the table used for the dynamic programming approach of finding
@@ -47,16 +13,16 @@ def max_subarray_sum(array):
 def build_lcs_table(seq1, seq2):
     m = len(seq1)
     n = len(seq2)
-    table = [[0 for i in range(n+1)] for j in range(m+1)]
+    lcs_table = [[0 for i in range(n+1)] for j in range(m+1)]
 
     for i in range(0, m):
         for j in range(0, n):
             if seq1[i] == seq2[j]:
-                table[i+1][j+1] = table[i][j] + 1
+                lcs_table[i+1][j+1] = lcs_table[i][j] + 1
             else:
-                table[i+1][j+1] = max(table[i][j+1], table[i+1][j])
+                lcs_table[i+1][j+1] = max(lcs_table[i][j+1], lcs_table[i+1][j])
 
-    return table
+    return lcs_table
 
 
 #Returns the length of the longest common subsequece between two
@@ -93,13 +59,6 @@ def backtrack_all_lcs(lcs_table, seq1, seq2, m, n):
         return same_length_lcs
 
 
-#Builds the LCS table for the two given sequences 
-#and returns all the longest common subsequences.
-def find_all_lcs(seq1, seq2):
-    lcs_table = build_lcs_table(seq1, seq2)
-    return backtrack_all_lcs(lcs_table, seq1, seq2, len(seq1), len(seq2))
-
-
 #Finds one of the longest common subsequences of
 #two sequences using the given LCS table.
 def backtrack_lcs(lcs_table, seq1, seq2, m, n):
@@ -116,11 +75,14 @@ def backtrack_lcs(lcs_table, seq1, seq2, m, n):
             return backtrack_lcs(lcs_table, seq1, seq2, m-1, n)
 
 
-#Builds the LCS table for the two given sequences 
-#and returns one of the longest common subsequences.
-def find_lcs(seq1, seq2):
+#Builds the LCS table for the two given sequences and either
+#returns one of the longest common subsequences (find_all = False)
+#or all the longest common subsequences (find_all = True).
+def longest_common_subsequence(seq1, seq2, find_all = False):
     lcs_table = build_lcs_table(seq1, seq2)
-    return backtrack_lcs(lcs_table, seq1, seq2, len(seq1), len(seq2))
+    return (backtrack_all_lcs(lcs_table, seq1, seq2, len(seq1), len(seq2))
+            if find_all
+            else backtrack_lcs(lcs_table, seq1, seq2, len(seq1), len(seq2)))
 
 
 
@@ -130,38 +92,38 @@ def find_lcs(seq1, seq2):
 #Finds the highest index for which seq[last_val_indices[index]] > seq[i]
 #using binary search (complexity O(log(n)).
 def upper_bound(seq, last_val_indices, cur_size, cur_index):
-    low  = 1
-    high = cur_size
+    lo  = 1
+    hi = cur_size
     mid  = 0
-    while high >= low:
-        mid =  math.ceil((high+low)/2)
+    while hi >= lo:
+        mid =  math.ceil((hi+lo)/2)
         if seq[last_val_indices[mid]] <= seq[cur_index]:
-            low = mid + 1
+            lo = mid + 1
         else:
-            high = mid - 1
-    return low
+            hi = mid - 1
+    return lo
 
 
 #Finds the lowest index for which seq[last_val_indices[index]] > seq[i]
 #using binary search (complexity O(log(n)).
 def lower_bound(seq, last_val_indices, cur_size, cur_index):
-    low  = 1
-    high = cur_size
+    lo  = 1
+    hi = cur_size
     mid  = 0
-    while high >= low:
-        mid =  math.ceil((high+low)/2)
+    while hi >= lo:
+        mid =  math.ceil((hi+lo)/2)
         if seq[last_val_indices[mid]] >= seq[cur_index]:
-            high = mid - 1
+            hi = mid - 1
         else:
-            low = mid + 1
-    return low
+            lo = mid + 1
+    return lo
 
 
 #Finds the longest increasing subsequence in the given sequence (O(n*log(n))).
 #By default, it finds the longest nondecreasing subsequence but
 #by setting strictly_increasing to True, the longest strictly
 #increasing subsequence is found.
-def find_lis(seq, strictly_increasing=False):
+def longest_increasing_subsequence(seq, strictly_increasing = False):
     seq_length = len(seq)
 
     if seq_length == 0 or seq_length == 1:
