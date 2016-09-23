@@ -321,9 +321,10 @@ class LinkedList:
         return self.at(index)
 
     def __iter__(self):
+        self._current = self._front
         return self
 
-    #Returns the number of elements in the list.
+    #Returns the number of elements present in the list.
     def __len__(self):
         return self.size()
 
@@ -346,7 +347,6 @@ class LinkedList:
             cur_node = cur_node.next
         result += ']'
         return result
-
 
     #Returns the node at the given index or None if the list is empty.
     def _get_node(self, index):
@@ -380,7 +380,6 @@ class LinkedList:
                 if node.next is not None:
                     node.next.prev = node.prev
                 self._size -= 1
-
 
     #Returns the value of the node at the given
     #index or None if the list is empty. 
@@ -523,6 +522,84 @@ class LinkedList:
     #Returns the number of elements present in the list.
     def size(self):
         return self._size
+
+
+
+#------------------------------------Queue-------------------------------------
+
+#Queue implemented using a linked list.
+class Queue:
+    def __init__(self):
+        self._lst = LinkedList()
+
+    #Return the number of elements present in the queue.
+    def __len__(self):
+        return self.size()
+
+    #Returns a string representing the queue.
+    def __str__(self):
+        return str(self._lst)
+         
+    #Returns a boolean indicating if the queue is empty.
+    def empty(self):
+        return self._lst.empty()
+
+    #Returns the value of the element at the
+    #front of the queue or None if it is empty.
+    def front(self):
+        return self._lst.front()
+
+    #Removes the element at the front of 
+    #the queue but doesn't return it.
+    def pop(self):
+        self._lst.pop_front()
+
+    #Appends the given element at the back of the queue.
+    def push(self, value):
+        self._lst.push_back(value)
+
+    #Return the number of elements present in the queue.
+    def size(self):
+        return self._lst.size()
+
+
+
+#------------------------------------Stack-------------------------------------
+
+#Stack implemented using a linked list.
+class Stack:
+    def __init__(self):
+        self._lst = LinkedList()
+
+    #Return the number of elements present in the stack.
+    def __len__(self):
+        return self.size()
+
+    #Returns a string representing the stack.
+    def __str__(self):
+        return str(self._lst)
+
+    #Returns sa boolean indicating if the stack is empty.
+    def empty(self):
+        return self._lst.empty()
+
+    #Returns the value of the element at the
+    #top of the stack or None if it is empty.
+    def peek(self):
+        return self._lst.front()
+
+    #Removes the element at the top
+    #of stack but doesn't return it.
+    def pop(self):
+        self._lst.pop_front()
+
+    #Pushes the given element on the top of the stack.
+    def push(self, value):
+        self._lst.push_front(value)
+
+    #Return the number of elements present in the stack.
+    def size(self):
+        return self._lst.size()
 
 
 
