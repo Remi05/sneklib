@@ -167,18 +167,22 @@ def gnome_sort(lst, reverse = False):
 #Sorts the elements in a list using Heap sort.
 def heap_sort(lst):
     heap = rp_data_structures.BinaryHeap()
-    heap.insertArray(lst)
+    heap.insert_array(lst)
     i = 0
-    while not heap.isEmpty():
+    while not heap.empty():
         lst[i] = heap.pop()
         i += 1
 
 
-#Sorts the elements in a list using Tree sort.
-def tree_sort(lst):
+#Sorts the elements in a list using Tree sort,
+#can sort in reverse order as well.
+def tree_sort(lst, reverse = False):
     bst = rp_data_structures.ArrayBST()
-    bst.insertArray(lst)
-    lst[:] = bst.getSortedArray()
+    bst.insert_array(lst)
+    if reverse:
+        lst[:] = bst.get_reverse_array()
+    else:
+        lst[:] = bst.get_sorted_array()
 
 
 #Merges the list to be sorted and the temporary list in the specified range
@@ -418,7 +422,7 @@ SORTING_FUNTIONS = [ (bubble_sort,    True),  (bucket_sort,          False),
                      (heap_sort,      False), (improved_bubble_sort, True),
                      (insertion_sort, True),  (merge_sort,           False),
                      (odd_even_sort,  True),  (quicksort,            False),
-                     (selection_sort, True),  (tree_sort,            False) ]
+                     (selection_sort, True),  (tree_sort,            True) ]
   
 #Tests all the functions in SORTING_FUNCTIONS.
 def test_all_functions():
