@@ -4,7 +4,7 @@
 
 
 #TODO: Allow duplicate values in ArrayBST (should fix tree_sort in rp_sorting.py).
-#TODO: Finish LinkedList (review __iter__() and next() + other stuff).
+#TODO: Finish DoublyLinkedList (review __iter__() and next() + other stuff).
 #TODO: PROPER TESTS
 
 #----------------------------------Array BST-----------------------------------
@@ -296,21 +296,6 @@ class BinaryHeap:
 
 
 
-#----------------------------------Hash map------------------------------------
-
-class HashMap:
-    DEFAULT_INITIAL_SIZE = 10
-
-    def __init__(self, initial_size = DEFAULT_INITIAL_SIZE): 
-        self._max_size = max(initial_size, 0)
-        self._cur_size = 0
-        self._array = [None for _ in range(self._max_size)]
-
-    def _enlarge(self):
-        pass
-
-
-
 #-----------------------------Doubly linked list-------------------------------
 
 #Class used to represent an entry in the doubly linked list.
@@ -321,8 +306,9 @@ class ListNode:
         self.next = next
 
 
-#Doubly linked list data structure.
-class LinkedList:
+#Doubly linked list data structure (could also
+#be considered to be a double-ended queue).
+class DoublyLinkedList:
     def __init__(self):
         self._front = None
         self._back = None
@@ -539,12 +525,27 @@ class LinkedList:
 
 
 
+#----------------------------------Hash map------------------------------------
+
+class HashMap:
+    DEFAULT_INITIAL_SIZE = 10
+
+    def __init__(self, initial_size = DEFAULT_INITIAL_SIZE): 
+        self._max_size = max(initial_size, 0)
+        self._cur_size = 0
+        self._array = [None for _ in range(self._max_size)]
+
+    def _enlarge(self):
+        pass
+
+
+
 #------------------------------------Queue-------------------------------------
 
 #Queue implemented using a linked list.
 class Queue:
     def __init__(self):
-        self._lst = LinkedList()
+        self._lst = DoublyLinkedList()
 
     #Return the number of elements present in the queue.
     def __len__(self):
@@ -553,6 +554,10 @@ class Queue:
     #Returns a string representing the queue.
     def __str__(self):
         return str(self._lst)
+
+    #Removes every entry in the queue.
+    def clear(self):
+        self._lst.clear()
          
     #Returns a boolean indicating if the queue is empty.
     def empty(self):
@@ -583,7 +588,7 @@ class Queue:
 #Stack implemented using a linked list.
 class Stack:
     def __init__(self):
-        self._lst = LinkedList()
+        self._lst = DoublyLinkedList()
 
     #Return the number of elements present in the stack.
     def __len__(self):
@@ -592,6 +597,10 @@ class Stack:
     #Returns a string representing the stack.
     def __str__(self):
         return str(self._lst)
+
+    #Removes every entry in the stack.
+    def clear(self):
+        self._lst.clear()
 
     #Returns sa boolean indicating if the stack is empty.
     def empty(self):
@@ -617,7 +626,7 @@ class Stack:
 
 
 
-#--------------------------------Min-Max Stack---------------------------------
+#--------------------------------Min-max stack---------------------------------
 
 #Class used to represent a node in a min-max stack.
 class MinMaxNode:
@@ -636,6 +645,10 @@ class MinMaxStack:
         self._min_node = None
         self._max_node = None
         self._size = 0
+
+    #Return the number of elements present in the stack.
+    def __len__(self):
+        return self.size()
 
     #Returns sa boolean indicating if the stack is empty.
     def empty(self):
@@ -691,15 +704,19 @@ class MinMaxStack:
 
 
 
-#--------------------------------Min-Max Queue---------------------------------
+#--------------------------------Min-max queue---------------------------------
 
 #Queue data structure which can return the minimum and 
-#the maximum value implemented using two Min-Max stacks.
+#the maximum value, implemented using two min-max stacks.
 #Push: O(1)   Pop: O(1)   Front: O(1)   Min: O(1)   Max: O(1)
 class MinMaxQueue:
     def __init__(self):
         self._push_stack = MinMaxStack()
         self._pop_stack = MinMaxStack()
+
+    #Return the number of elements present in the queue.
+    def __len__(self):
+        return self.size()
 
     #Returns a boolean indicating if the queue is empty.
     def empty(self):
@@ -769,7 +786,7 @@ class SuffixTree:
 
 #------------------------------------Trie--------------------------------------
 
-#Class used to represent a trie's node.
+#Class used to represent a trie node.
 class TrieNode:
     def __init__(self, char, ends_word = False, is_root = False):
         self.char = char
@@ -788,17 +805,6 @@ class TrieNode:
         else:
             self.children[string[0]].add(string[1:])
 
-    #Returns a boolean indicating if the given string
-    #is a prefix of any of the children of the node.
-    def is_prefix(self, string):
-        if string is None or len(string) == 0:
-            return False
-        if not string[0] in self.children:
-            return False
-        if len(string) == 1:
-            return True       
-        return self.children[string[0]].is_prefix(string[1:])
-
     #Returns a boolean indicating if the given string has previously
     #been added to the node (each character must be a sub-node and
     #the last character must be a node which ends a word). 
@@ -811,25 +817,55 @@ class TrieNode:
             return self.children[string[0]].ends_word
         return self.children[string[0]].contains(string[1:])
 
+    #Returns a boolean indicating if the given string
+    #is a prefix of any of the children of the node.
+    def is_prefix(self, string):
+        if string is None or len(string) == 0:
+            return False
+        if not string[0] in self.children:
+            return False
+        if len(string) == 1:
+            return True       
+        return self.children[string[0]].is_prefix(string[1:])
+
+    #Returns the length of the longest common prefix of
+    #the given string and the strings under the current node.
+    def longest_prefix_length(self, string):
+        if string is None or len(string) == 0 or not string[0] in self.children:
+            return 0
+        if len(string) == 1:
+            return 1
+        return self.children[string[0]].longest_prefix_length(string[1:]) + 1
+
 
 #Trie data structure.
 class Trie:
     def __init__(self):
-        self.root = TrieNode(None, is_root = True)
+        self._root = TrieNode(None, is_root = True)
 
     #Adds the given string in the trie.
     def add(self, string):
-        self.root.add(string)
+        self._root.add(string)
 
     #Returns a boolean indicating if the given string
     #is contained (has previously been added) in the trie.
     def contains(self, string):
-        return self.root.contains(string)
+        return self._root.contains(string)
 
     #Returns a boolena indicating if the given string
     #is a prefix of any previously added string.
     def is_prefix(self, string):
-        return self.root.is_prefix(string)
+        return self._root.is_prefix(string)
+
+    #Returns the longest common prefix between the given string
+    #and any of the strings contained in the trie.
+    def longest_common_prefix(self, string):
+        return string[:self.longest_prefix_length(string)]
+
+    #Returns the length of the longest common prefix between the
+    #given string and any of the strings contained in the trie.
+    def longest_prefix_length(self, string):
+        return self._root.longest_prefix_length(string)
         
 
 
