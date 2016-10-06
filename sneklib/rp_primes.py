@@ -6,12 +6,15 @@ import math
 
 
 #Constants to help find the n first primes.
-PRIME_100   = 523
-PRIME_256   = 1613
-PRIME_500   = 3581
-PRIME_1000  = 7919
-PRIME_5000  = 48611
-PRIME_10000 = 104729
+PRIME_100    = 523
+PRIME_256    = 1613
+PRIME_500    = 3581
+PRIME_1000   = 7919
+PRIME_5000   = 48611
+PRIME_10000  = 104729
+PRIME_50000  = 611953
+PRIME_100000 = 1299709
+PRIME_500000 = 7368787
 
 
 #Finds all the prime numbers smaller or equal to
@@ -50,4 +53,4 @@ def is_prime(n):
 
 
 #Tests
-print(sieve_of_eratosthenes(PRIME_10000))
+print(sieve_of_eratosthenes(PRIME_50000))
