@@ -219,7 +219,6 @@ class BinaryHeap:
         self._growth_rate = growth_rate if growth_rate > 1 else self.DEFAULT_GROWTH_RATE
         self._entries = [None for i in range(self._max_size)]
 
-
     #Resizes the underlying array according to the set growth rate.
     def _enlarge(self):
         new_size = self._max_size * self._growth_rate + 1
@@ -294,6 +293,21 @@ class BinaryHeap:
     def insert_pair_array(self, array):
         for e in array:
             self.insert_pair(e[0], e[1])
+
+
+
+#----------------------------------Hash map------------------------------------
+
+class HashMap:
+    DEFAULT_INITIAL_SIZE = 10
+
+    def __init__(self, initial_size = DEFAULT_INITIAL_SIZE): 
+        self._max_size = max(initial_size, 0)
+        self._cur_size = 0
+        self._array = [None for _ in range(self._max_size)]
+
+    def _enlarge(self):
+        pass
 
 
 
@@ -558,7 +572,7 @@ class Queue:
     def push(self, value):
         self._lst.push_back(value)
 
-    #Return the number of elements present in the queue.
+    #Returns the number of elements present in the queue.
     def size(self):
         return self._lst.size()
 
@@ -597,10 +611,152 @@ class Stack:
     def push(self, value):
         self._lst.push_front(value)
 
-    #Return the number of elements present in the stack.
+    #Returns the number of elements present in the stack.
     def size(self):
         return self._lst.size()
 
+
+
+#--------------------------------Min-Max Stack---------------------------------
+
+#Class used to represent a node in a min-max stack.
+class MinMaxNode:
+    def __init__(self, value, next = None, min_so_far = None, max_so_far = None):
+        self.value = value
+        self.next = next
+        self.min_so_far = min_so_far
+        self.max_so_far = max_so_far
+
+
+#Stack data structure which can also return the minimum and the maximum value.
+#Push: O(1)   Pop: O(1)   Peek: O(1)   Min: O(1)   Max: O(1)
+class MinMaxStack:
+    def __init__(self):
+        self._top = None
+        self._min_node = None
+        self._max_node = None
+        self._size = 0
+
+    #Returns sa boolean indicating if the stack is empty.
+    def empty(self):
+        return self._size == 0
+
+    #Returns the maximum value in the
+    #stack or None if it is empty.
+    def max(self):
+        return None if self.empty() else self._max_node.value
+
+    #Returns the minimum value in the
+    #stack or None if it is empty.
+    def min(self):
+       return None if self.empty() else self._min_node.value
+
+    #Returns the value of the element at the
+    #top of the stack or None if it is empty.
+    def peek(self):
+        return None if self.empty() else self._top.value
+
+    #Removes the element at the top
+    #of stack but doesn't return it.
+    def pop(self):
+        if not self.empty():
+            if self._top == self._max_node:
+                self._max_node = self._max_node.max_so_far
+            if self._top == self._min_node:
+                self._min_node = self._min_node.min_so_far
+            self._top = self._top.next
+            self._size -= 1
+
+    #Pushes the given element on the top of the stack.
+    def push(self, value):
+        new_node = MinMaxNode(value)
+        if self.empty():
+            self._top = new_node
+            self._min_node = new_node
+            self._max_node = new_node
+        else:
+            new_node.min_so_far = self._min_node
+            new_node.max_so_far = self._max_node
+            new_node.next = self._top
+            self._top = new_node
+            if value <= self._min_node.value:
+                self._min_node = new_node
+            if value >= self._max_node.value:
+                self._max_node = new_node
+        self._size += 1
+
+    #Returns the number of elements present in the stack.
+    def size(self):
+        return self._size
+
+
+
+#--------------------------------Min-Max Queue---------------------------------
+
+#Queue data structure which can return the minimum and 
+#the maximum value implemented using two Min-Max stacks.
+#Push: O(1)   Pop: O(1)   Front: O(1)   Min: O(1)   Max: O(1)
+class MinMaxQueue:
+    def __init__(self):
+        self._push_stack = MinMaxStack()
+        self._pop_stack = MinMaxStack()
+
+    #Returns a boolean indicating if the queue is empty.
+    def empty(self):
+        return self._push_stack.empty() and self._pop_stack.empty()
+
+    #Returns the value of the element at the
+    #front of the queue or None if it is empty.
+    def front(self):
+        if self.empty():
+            return None
+        if self._pop_stack.empty():
+            self._transfer_push_stack()
+        return self._pop_stack.peek()
+
+    #Returns the maximum value in the
+    #queue or None if it is empty.
+    def max(self):
+        if self._pop_stack.empty():
+            return self._push_stack.max()
+        elif self._push_stack.empty():
+            return self._pop_stack.max()
+        else:
+            return max(self._pop_stack.max(), self._push_stack.max())
+
+    #Returns the minimum value in the
+    #queue or None if it is empty.
+    def min(self):
+        if self._pop_stack.empty():
+            return self._push_stack.min()
+        elif self._push_stack.empty():
+            return self._pop_stack.min()
+        else:
+            return min(self._pop_stack.min(), self._push_stack.min())
+
+    #Removes the element at the front of 
+    #the queue but doesn't return it.
+    def pop(self):
+        if not self.empty():    
+            if self._pop_stack.empty():
+                self._transfer_push_stack()
+            self._pop_stack.pop()
+          
+    #Appends the given element at the back of the queue.      
+    def push(self, value):
+        self._push_stack.push(value)
+
+    #Returns the number of elements present in the queue.
+    def size(self):
+        return self._push_stack.size() + self._pop_stack.size()
+
+    def _transfer_push_stack(self):
+        if not self.empty():
+            while not self._push_stack.empty():
+                self._pop_stack.push(self._push_stack.peek())
+                self._push_stack.pop()
+
+                
 
 
 #---------------------------------Suffix tree----------------------------------
@@ -611,8 +767,112 @@ class SuffixTree:
 
 
 
+#------------------------------------Trie--------------------------------------
+
+#Class used to represent a trie's node.
+class TrieNode:
+    def __init__(self, char, ends_word = False, is_root = False):
+        self.char = char
+        self.ends_word = ends_word
+        self.is_root = is_root
+        self.children = dict()
+
+    #Appends the given string under the node (as children).
+    def add(self, string):
+        if string is None or len(string) == 0:
+            return
+        if not string[0] in self.children:
+            self.children[string[0]] = TrieNode(string[0])       
+        if len(string) == 1:
+            self.children[string[0]].ends_word = True
+        else:
+            self.children[string[0]].add(string[1:])
+
+    #Returns a boolean indicating if the given string
+    #is a prefix of any of the children of the node.
+    def is_prefix(self, string):
+        if string is None or len(string) == 0:
+            return False
+        if not string[0] in self.children:
+            return False
+        if len(string) == 1:
+            return True       
+        return self.children[string[0]].is_prefix(string[1:])
+
+    #Returns a boolean indicating if the given string has previously
+    #been added to the node (each character must be a sub-node and
+    #the last character must be a node which ends a word). 
+    def contains(self, string):
+        if string is None or len(string) == 0:
+            return False
+        if not string[0] in self.children:
+            return False
+        if len(string) == 1:
+            return self.children[string[0]].ends_word
+        return self.children[string[0]].contains(string[1:])
+
+
+#Trie data structure.
+class Trie:
+    def __init__(self):
+        self.root = TrieNode(None, is_root = True)
+
+    #Adds the given string in the trie.
+    def add(self, string):
+        self.root.add(string)
+
+    #Returns a boolean indicating if the given string
+    #is contained (has previously been added) in the trie.
+    def contains(self, string):
+        return self.root.contains(string)
+
+    #Returns a boolena indicating if the given string
+    #is a prefix of any previously added string.
+    def is_prefix(self, string):
+        return self.root.is_prefix(string)
+        
+
+
 
 #Test
+#lst = [1, 4, 5, 0, 4, -2, 10, 5, 20, -13, 0]
+#min_max_stack = MinMaxStack()
+#min_max_queue = MinMaxQueue()
+
+#print('-----Insert Test-----')
+#for val in lst:
+#    min_max_stack.push(val)
+#    min_max_queue.push(val)
+#    print(val)
+#    print('Stack:  top:   {0}  min: {1}  max: {2}'.format(min_max_stack.peek(), min_max_stack.min(), min_max_stack.max()))
+#    print('Queue:  front: {0}  min: {1}  max: {2}'.format(min_max_queue.front(), min_max_queue.min(), min_max_queue.max()))
+
+#print('\n-----Stack Pop Test-----')
+#while not min_max_stack.empty():
+#    print(min_max_stack.peek())
+#    print('Stack:  top:   {0}  min: {1}  max: {2}'.format(min_max_stack.peek(), min_max_stack.min(), min_max_stack.max()))
+#    min_max_stack.pop()
+
+#print('\n-----Queue Pop Test-----')
+#while not min_max_queue.empty():
+#    print(min_max_queue.front())
+#    print('Queue:  front: {0}  min: {1}  max: {2}'.format(min_max_queue.front(), min_max_queue.min(), min_max_queue.max()))
+#    min_max_queue.pop()
+
+
+
+#lst = ["Bonjour", "Hello", "Hi", "Hey", "Bonne"]
+#test = ["Bon", "Ha", "Hell", "Bonjour!", "Hey", "Bye", "k", "", None]
+#trie = Trie()
+#for string in lst:
+#    trie.add(string)
+#for string in test:
+#    contains = trie.contains(string)
+#    prefix = trie.is_prefix(string)
+#    print(str(string) + ' :\tContains: ' + str(contains) + '\tPrefix: ' + str(prefix))
+
+
+
 #array = [3,34,6,8,2,3,1,9,67]
 
 #bst = ArrayBST()
@@ -623,6 +883,150 @@ class SuffixTree:
 #heap.insertArray(array)
 #while not heap.isEmpty():
 #    print(heap.pop())
+
+#lst = LinkedList()
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.push_back(5)
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.push_back('Hello')
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.push_front(None)
+#print(str(lst) + ' ' + str(lst.size()))
+
+#front = lst.front()
+#back = lst.back()
+#print('Front: ' + str(front))
+#print('Back: ' + str(back))
+
+#lst.pop_back()
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.pop_front()
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.pop_front()
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.pop_front()
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.pop_back()
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.insert('Wat', 0)
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.insert('Lel', 0)
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.insert('Kek', 1)
+#print(str(lst) + ' ' + str(lst.size()))
+
+#print(lst.contains('Lel'))
+#print(lst.find('Lel'))
+
+#print(lst.contains('Wut'))
+#print(lst.find('Wut'))
+
+#print(lst.at(0))
+#print(lst[0])
+
+#print(lst.at(1))
+#print(lst[1])
+
+#print(lst.at(2))
+#print(lst[2])
+
+#print(lst.at(-1))
+#print(lst[-1])
+
+#lst.remove('Wut')
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.remove('Kek')
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.insert('Wut', -1)
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.remove_at(0)
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.remove_at(-1)
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.remove_at(-1)
+#print(str(lst) + ' ' + str(lst.size()))
+
+#lst.remove_at(0)
+#print(str(lst) + ' ' + str(lst.size()))
+
+#test_lst = [1, None, 'hello', 'boss', (1,2), [], 5]
+#for val in test_lst:
+#    lst.push_back(val)
+
+#print(str(lst) + ' ' + str(lst.size()))
+
+#for val in lst:
+#    print(val)
+
+#for val in lst:
+#    print(val)
+
+#print(len(lst))
+
+
+#stack = Stack()
+#print(stack)
+#print(len(stack))
+#print(str(stack) + ' ' + str(stack.size()))
+#stack.push(10)
+#print(str(stack) + ' ' + str(stack.size()))
+#stack.push('Hello')
+#print(str(stack) + ' ' + str(stack.size()))
+#stack.push(None)
+#print(str(stack) + ' ' + str(stack.size()))
+#print(stack.peek())
+#stack.pop()
+#print(str(stack) + ' ' + str(stack.size()))
+#print(stack.peek())
+#stack.pop()
+#print(str(stack) + ' ' + str(stack.size()))
+#print(stack.peek())
+#stack.pop()
+#print(str(stack) + ' ' + str(stack.size()))
+#print(stack.peek())
+#stack.pop()
+#print(str(stack) + ' ' + str(stack.size()))
+#print(stack.peek())
+
+
+#queue = Queue()
+#print(queue)
+#print(len(queue))
+#print(str(queue) + ' ' + str(queue.size()))
+#queue.push(10)
+#print(str(queue) + ' ' + str(queue.size()))
+#queue.push('Hello')
+#print(str(queue) + ' ' + str(queue.size()))
+#queue.push(None)
+#print(str(queue) + ' ' + str(queue.size()))
+#print(queue.front())
+#queue.pop()
+#print(str(queue) + ' ' + str(queue.size()))
+#print(queue.front())
+#queue.pop()
+#print(str(queue) + ' ' + str(queue.size()))
+#print(queue.front())
+#queue.pop()
+#print(str(queue) + ' ' + str(queue.size()))
+#print(queue.front())
+#queue.pop()
+#print(str(queue) + ' ' + str(queue.size()))
+#print(queue.front())
 
 
 
