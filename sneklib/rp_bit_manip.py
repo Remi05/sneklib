@@ -24,10 +24,17 @@ def count_set_bits(x):
 def count_unset_bits(x):
     return count_set_bits(~x)
 
-#Returns the index of the lowest
-#set bit in the given number.
-#-1 is returned if no bit is set (x = 0).
+#Returns the highest set bit in the given number.
+#If no bit is set (x = 0), 0 is returned.
 def highest_set_bit(x):
+    while (x & (x-1)) != 0:
+        x &= x-1
+    return x
+
+#Returns the index of the highest
+#set bit in the given number.
+#If no bit is set (x = 0), -1 is returned.
+def highest_set_bit_pos(x):
     if x == 0:
         return -1
     count = 0
@@ -51,10 +58,15 @@ def is_odd(x):
 def is_power_of_two(x):
     return (x & (x-1)) == 0
 
+#Returns the lowest set bit in the given number.
+#If no bit is set (x = 0), 0 is returned.
+def lowest_set_bit(x):
+    return x & -x
+
 #Returns the index of the lowest
 #set bit in the given number.
-#-1 is returned if no bit is set (x = 0).
-def lowest_set_bit(x):
+#If no bit is set (x = 0), -1 is returned.
+def lowest_set_bit_pos(x):
     if x == 0:
         return -1
     count = 0
@@ -72,6 +84,14 @@ def max_no_branch(x, y):
 #values (x and y) without branching.
 def min_no_branch(x, y):
     return y ^ ((x ^ y) & -(x < y))
+
+#Returns the power of 2 that is nearest to x.
+#If x if half-way between two powers of 2,
+#the biggest of the two is chosen. 
+#ie.: x = 48 -> 64-48 = 48-32 = 16 -> returns 64
+def nearest_power_of_two(x):
+    msb_pos = highest_set_bit_pos(x)
+    return 1 << (msb_pos + ((x >> (msb_pos-1))&1))
 
 #Returns a boolean indicating whether or not the two
 #given values (x and y) have opposite signs (+/-).
@@ -101,8 +121,7 @@ def swap_values(x, y):
 
 
 #Tests
-x = 10
-y = 55
-print(min_no_branch(x,y))
-
+#x = 10
+#y = 55
+#print(min_no_branch(x,y))
 
