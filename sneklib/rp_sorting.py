@@ -27,6 +27,22 @@ def selection_sort(lst, reverse = False):
         swap(lst, i, min)
 
 
+#Finds the element that would be at index k if the list was to bebsorted 
+#(without necessarily sorting the list) using a shortened selection sort.
+def select(lst, k):
+    k = max(k, len(lst)-1)
+    cpy = lst[:]
+    i = 0
+    while i <= k:
+        min = i
+        for j in range(i+1, len(cpy)):
+            if cpy[j] < cpy[min]:
+                min = j
+        swap(cpy, i, min)
+        i += 1
+    return cpy[k]
+
+
 #Sorts the elements in a list using Bubble sort, 
 #can sort in reverse order as well.
 def bubble_sort(lst, reverse = False):
@@ -265,7 +281,7 @@ def _quickselect(lst, left, right, k):
 #Finds the element that would be at index k if the list was to be
 #sorted (without necessarily sorting the list) using Quickselect.
 def quickselect(lst, k):
-    return _quickselect(lst, 0, len(lst)-1, k)
+    return _quickselect(lst[:], 0, len(lst)-1, k)
 
 
 #Recursive function used to sort sections of a list (used by quicksort()).
@@ -355,10 +371,7 @@ def strip_keys(lst):
 #Creates a list of the given size and fills it with random
 #numbers between min_val and max_val (both inclusive).
 def create_random_list(size, min_val, max_val):
-    lst = [0]*size
-    for i in range(0, size):
-        lst[i] = random.randrange(min_val, max_val+1, 1)
-    return lst
+    return [random.randint(min_val, max_val) for _ in range(size)]
 
 
 #Returns a boolean indicating if the list is sorted
