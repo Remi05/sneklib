@@ -53,4 +53,4 @@ def is_prime(n):
 
 
 #Tests
-print(sieve_of_eratosthenes(PRIME_50000))
+print(sieve_of_eratosthenes(PRIME_100000))
