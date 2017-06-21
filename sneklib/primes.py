@@ -1,5 +1,5 @@
 #Author: Remi Pelletier
-#File:   rp_primes.py
+#File:   primes.py
 #Desc.:  Module containing functions related to primes.
 
 import math
@@ -49,8 +49,3 @@ def is_prime(n):
             return False
         i += 6
     return True
-
-
-
-#Tests
-print(sieve_of_eratosthenes(PRIME_100000))

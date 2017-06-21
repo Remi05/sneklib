@@ -1,5 +1,5 @@
 #Author: Remi Pelletier
-#File:   rp_array_search.py
+#File:   array_search.py
 #Desc.:  Module containing various array search functions.
 
 
@@ -23,12 +23,6 @@ def binary_search(arr, x, lo = 0, hi = -1):
         else:
             lo = mid + 1
     return -1
-    
-
-#Finds the position of an element (x)
-#in the given array (arr) using interpolation search.
-def interpolation_search(arr, x):
-    pass #TODO
 
 
 #Finds the position of an element (x)
@@ -90,7 +84,6 @@ def upper_bound(arr, x, lo = 0, hi = -1):
     return lo
 
 
-
 #-----------------Max subarray problem (Kadane's algorithm)--------------------
 
 #Computes the maximum subarray using Kadane's algorithm
@@ -122,10 +115,3 @@ def max_subarray(array):
 def max_subarray_sum(array):
     return sum(max_subarray(array))
 
-
-
-
-#Tests
-arr = [1, 4, 7, 8, 15, 21, 23, 34]
-x = 22
-print(lower_bound(arr, x))

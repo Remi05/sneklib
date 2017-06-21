@@ -1,11 +1,7 @@
 #Author: Rémi Pelletier
-#File:   rp_data_structures.py
+#File:   data_structures.py
 #Desc.:  A module containing my implementation of various data structures.
 
-
-#TODO: Allow duplicate values in ArrayBST (should fix tree_sort in rp_sorting.py).
-#TODO: Finish DoublyLinkedList (review __iter__() and next() + other stuff).
-#TODO: PROPER TESTS
 
 #----------------------------------Array BST-----------------------------------
 
@@ -525,21 +521,6 @@ class DoublyLinkedList:
 
 
 
-#----------------------------------Hash map------------------------------------
-
-class HashMap:
-    DEFAULT_INITIAL_SIZE = 10
-
-    def __init__(self, initial_size = DEFAULT_INITIAL_SIZE): 
-        self._max_size = max(initial_size, 0)
-        self._cur_size = 0
-        self._array = [None for _ in range(self._max_size)]
-
-    def _enlarge(self):
-        pass
-
-
-
 #------------------------------------Queue-------------------------------------
 
 #Queue implemented using a linked list.
@@ -775,15 +756,6 @@ class MinMaxQueue:
 
                 
 
-
-#---------------------------------Suffix tree----------------------------------
-
-class SuffixTree:
-    def __init__(self, string):
-        self.string = string
-
-
-
 #------------------------------------Trie--------------------------------------
 
 #Class used to represent a trie node.
@@ -866,204 +838,6 @@ class Trie:
     #given string and any of the strings contained in the trie.
     def longest_prefix_length(self, string):
         return self._root.longest_prefix_length(string)
-        
-
-
-
-#Test
-#lst = [1, 4, 5, 0, 4, -2, 10, 5, 20, -13, 0]
-#min_max_stack = MinMaxStack()
-#min_max_queue = MinMaxQueue()
-
-#print('-----Insert Test-----')
-#for val in lst:
-#    min_max_stack.push(val)
-#    min_max_queue.push(val)
-#    print(val)
-#    print('Stack:  top:   {0}  min: {1}  max: {2}'.format(min_max_stack.peek(), min_max_stack.min(), min_max_stack.max()))
-#    print('Queue:  front: {0}  min: {1}  max: {2}'.format(min_max_queue.front(), min_max_queue.min(), min_max_queue.max()))
-
-#print('\n-----Stack Pop Test-----')
-#while not min_max_stack.empty():
-#    print(min_max_stack.peek())
-#    print('Stack:  top:   {0}  min: {1}  max: {2}'.format(min_max_stack.peek(), min_max_stack.min(), min_max_stack.max()))
-#    min_max_stack.pop()
-
-#print('\n-----Queue Pop Test-----')
-#while not min_max_queue.empty():
-#    print(min_max_queue.front())
-#    print('Queue:  front: {0}  min: {1}  max: {2}'.format(min_max_queue.front(), min_max_queue.min(), min_max_queue.max()))
-#    min_max_queue.pop()
-
-
-
-#lst = ["Bonjour", "Hello", "Hi", "Hey", "Bonne"]
-#test = ["Bon", "Ha", "Hell", "Bonjour!", "Hey", "Bye", "k", "", None]
-#trie = Trie()
-#for string in lst:
-#    trie.add(string)
-#for string in test:
-#    contains = trie.contains(string)
-#    prefix = trie.is_prefix(string)
-#    print(str(string) + ' :\tContains: ' + str(contains) + '\tPrefix: ' + str(prefix))
-
-
-
-#array = [3,34,6,8,2,3,1,9,67]
-
-#bst = ArrayBST()
-#bst.insertArray(array)
-#print(bst.getSortedArray())
-
-#heap = BinaryHeap()
-#heap.insertArray(array)
-#while not heap.isEmpty():
-#    print(heap.pop())
-
-#lst = LinkedList()
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.push_back(5)
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.push_back('Hello')
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.push_front(None)
-#print(str(lst) + ' ' + str(lst.size()))
-
-#front = lst.front()
-#back = lst.back()
-#print('Front: ' + str(front))
-#print('Back: ' + str(back))
-
-#lst.pop_back()
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.pop_front()
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.pop_front()
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.pop_front()
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.pop_back()
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.insert('Wat', 0)
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.insert('Lel', 0)
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.insert('Kek', 1)
-#print(str(lst) + ' ' + str(lst.size()))
-
-#print(lst.contains('Lel'))
-#print(lst.find('Lel'))
-
-#print(lst.contains('Wut'))
-#print(lst.find('Wut'))
-
-#print(lst.at(0))
-#print(lst[0])
-
-#print(lst.at(1))
-#print(lst[1])
-
-#print(lst.at(2))
-#print(lst[2])
-
-#print(lst.at(-1))
-#print(lst[-1])
-
-#lst.remove('Wut')
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.remove('Kek')
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.insert('Wut', -1)
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.remove_at(0)
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.remove_at(-1)
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.remove_at(-1)
-#print(str(lst) + ' ' + str(lst.size()))
-
-#lst.remove_at(0)
-#print(str(lst) + ' ' + str(lst.size()))
-
-#test_lst = [1, None, 'hello', 'boss', (1,2), [], 5]
-#for val in test_lst:
-#    lst.push_back(val)
-
-#print(str(lst) + ' ' + str(lst.size()))
-
-#for val in lst:
-#    print(val)
-
-#for val in lst:
-#    print(val)
-
-#print(len(lst))
-
-
-#stack = Stack()
-#print(stack)
-#print(len(stack))
-#print(str(stack) + ' ' + str(stack.size()))
-#stack.push(10)
-#print(str(stack) + ' ' + str(stack.size()))
-#stack.push('Hello')
-#print(str(stack) + ' ' + str(stack.size()))
-#stack.push(None)
-#print(str(stack) + ' ' + str(stack.size()))
-#print(stack.peek())
-#stack.pop()
-#print(str(stack) + ' ' + str(stack.size()))
-#print(stack.peek())
-#stack.pop()
-#print(str(stack) + ' ' + str(stack.size()))
-#print(stack.peek())
-#stack.pop()
-#print(str(stack) + ' ' + str(stack.size()))
-#print(stack.peek())
-#stack.pop()
-#print(str(stack) + ' ' + str(stack.size()))
-#print(stack.peek())
-
-
-#queue = Queue()
-#print(queue)
-#print(len(queue))
-#print(str(queue) + ' ' + str(queue.size()))
-#queue.push(10)
-#print(str(queue) + ' ' + str(queue.size()))
-#queue.push('Hello')
-#print(str(queue) + ' ' + str(queue.size()))
-#queue.push(None)
-#print(str(queue) + ' ' + str(queue.size()))
-#print(queue.front())
-#queue.pop()
-#print(str(queue) + ' ' + str(queue.size()))
-#print(queue.front())
-#queue.pop()
-#print(str(queue) + ' ' + str(queue.size()))
-#print(queue.front())
-#queue.pop()
-#print(str(queue) + ' ' + str(queue.size()))
-#print(queue.front())
-#queue.pop()
-#print(str(queue) + ' ' + str(queue.size()))
-#print(queue.front())
-
 
 
 

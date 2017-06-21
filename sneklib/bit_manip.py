@@ -1,5 +1,5 @@
 #Author: Remi Pelletier
-#File:   rp_bit_manip.py
+#File:   bit_manip.py
 #Desc.:  Module containing various bit manipulation related functions.
 
 
@@ -117,11 +117,3 @@ def swap_values(x, y):
     y ^= x
     x ^= y
     return x, y
-
-
-
-#Tests
-#x = 10
-#y = 55
-#print(min_no_branch(x,y))
-

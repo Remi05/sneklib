@@ -1,31 +1,16 @@
 #Author: Remi Pelletier
-#File:   rp_graphs.py
+#File:   graphs.py
 #Desc.:  Module containing various functions
 #        and classes related to graph theory.
 
 import heapq
 import sys
-import rp_data_structures
+import data_structures
 
 
 #Counts the number of different vertices in the given list of edges.
 def count_vertices(edges_list):
     return max(max(edge.v1, edge.v2) for edge in edges_list) - min(min(edge.v1, edge.v2) for edge in edges_list) + 1
-
-
-#Class used to represent an edge.
-class Edge:
-    def __init__(self, v1, v2, weight):
-        self.v1 = v1
-        self.v2 = v2
-        self.weight = weight
-
-
-#Class used to represent a vertex.
-class Vertex:
-    def __init__(self, id, neighbors={}):
-        self.id = id
-        self.neighbors = neighbors
 
 
 #Data structure used to represent a disjoint set.
@@ -61,7 +46,6 @@ class DisjointSet:
         self.nb_trees -= 1
 
 
-
 #----------------------------Minimum spanning tree-----------------------------
 
 #Finds the mininum spanning tree and returns it
@@ -88,3 +72,6 @@ def kruskal(edges_list, nb_vertices=None, pre_sorted=False):
             total_weight += edge.weight
 
     return mst, total_weight
+     
+
+    

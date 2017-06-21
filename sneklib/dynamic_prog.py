@@ -1,5 +1,5 @@
 #Author: Remi Pelletier
-#File:   rp_dynamic_prog.py
+#File:   dynamic_prog.py
 #Desc.:  Module containing my implementation of dynamic
 #        programming solutions to various problems.
 
@@ -50,13 +50,9 @@ def fibopnacci_seq(n):
     for i in range(2, n):
         seq.append(seq[i-1] + seq[i-2])
     return seq
-
-          
+      
 
 #--------------------------------Change making---------------------------------
-
-def change_making_nb_coins(coins, total):
-    pass
 
 def change_making_nb_ways(coins, total):
     #There is only one way of getting a
@@ -86,11 +82,6 @@ def change_making_nb_ways(coins, total):
     return dp[total]
 
 
-def change_making_coins_list(coins, total):
-    pass
-
-
-
 #----------------------------------Knapsack------------------------------------
 
 #Pseudo-polynomial solution to the 0-1 knapsack
@@ -114,10 +105,3 @@ def knapsack_01(max_weight, weights, values):
     #Return the max value obtained using all items
     #with max_weight as the maximum total weight.
     return dp[nb_items][max_weight] 
-
-
-def knapsack_bounded(max_weight, weights, values, max_rep):
-    pass #TODO
-
-def knapsack_unbounded(max_weight, weights, values):
-    pass #TODO

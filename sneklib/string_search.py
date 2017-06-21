@@ -1,18 +1,10 @@
 #Author: Rémi Pelletier
-#File:   rp_string_search.py
+#File:   string_search.py
 #Desc.:  A module containing my implementation of
 #        various string search related algorithms.
 
 
-#-----------------------Longest common substring problem-----------------------
-
-#...
-
-
-
-
 #---------------------------Substring search problem---------------------------
-
 
 #____________________________Rabin-Karp algorithm______________________________
 
@@ -83,11 +75,10 @@ def rabin_karp_set_search(s, pattern_set, find_all = False, rolling_hash = rk_ro
     return indices_dict
 
 
-
 #________________________Knuth-Morris-Pratt algorithm__________________________
 
 #Creates the partial match table used in the KMP algorithm.
-def create_partial_match_table(pattern):
+def _create_partial_match_table(pattern):
     pattern_length = len(pattern)
     table = [0] * (pattern_length + 1)
     table[0] = -1
@@ -114,7 +105,7 @@ def create_partial_match_table(pattern):
 #find_all = True  -> found : [indices]   / not found : []
 #find_all = False -> found : index       / not found : None
 def kmp_search(s, pattern, find_all = False):
-    table     = create_partial_match_table(pattern)
+    table     = _create_partial_match_table(pattern)
     start_pos = 0
     cur_pos   = 0
     indices   = []
@@ -140,23 +131,3 @@ def kmp_search(s, pattern, find_all = False):
                 start_pos += 1
 
     return indices if find_all else None
-
-
-
-#___________________________Boyer-Moore algorithm______________________________
-
-
-
-
-#_______________________Boyer-Moore-Horspoole algorithm________________________
-
-
-
-
-
-#Test
-pattern = "dldj"
-pattern_set = set(["abba", "djgk", "bbbb", "dldj", "kkkk"])
-string = "abbbbbbcdaaaabadjgkldldjabbbbacbaabbabbkla"
-
-print(kmp_search(string, pattern, True))

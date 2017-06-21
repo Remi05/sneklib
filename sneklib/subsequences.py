@@ -1,5 +1,5 @@
 #Author: Rémi Pelletier
-#File:   rp_subsequences.py
+#File:   subsequences.py
 #Desc.:  A module containing my implementation of
 #        various subsequences related algorithms.
 
@@ -173,91 +173,3 @@ def longest_increasing_subsequence(seq, strictly_increasing = False):
         seq_index = predecessor_indices[seq_index]
 
     return lis
-
-
-
-
-#-----------------------Longest palindromic subsequence------------------------
-
-#Builds the table used for the dynamic programming approach of finding
-#the longest palindromic subsequence (LPS) of a given sequence.
-def build_lps_table(seq):
-    n = len(seq)
-    lps_table = [[0 for i in range(n)] for j in range(n)]
-
-    for i in range(n):
-        lps_table[i][i] = 1
-
-    for length in range(2, n+1):
-        for start in range(n-length+1):
-            end = start + length -1 
-            if seq[start] == seq[end]:
-                lps_table[start][end] = lps_table[start+1][end-1] + 2
-            else:
-                lps_table[start][end] = max(lps_table[start+1][end], lps_table[start][end-1])
-    return lps_table
-
-
-#Returns the length of the longest palindromic subsequece
-#of a given sequence using the given LPS table.
-def get_lps_length(lps_table):
-    return lps_table[0][-1]
-
-
-#Computes the length of the longest palindromic subsequence 
-#of the given sequence using a dynamic programming approach.
-def compute_lcs_length(seq):
-    lps_table = build_lps_table(seq)
-    return get_lps_length(lps_table)
-
-
-#Finds all the longest common subsequences of
-#two sequences using the given LCS table.
-def backtrack_all_lps(lps_table, seq, m, n):
-    if m == 0 or n == 0:
-        return [[]]
-    elif seq1[m-1] == seq2[n-1]:
-        shorter_lcs = backtrack_all_lcs(lcs_table, seq1, seq2, m-1, n-1)
-        for lcs in shorter_lcs:
-            lcs.append(seq1[m-1])
-        return shorter_lcs
-    else:
-        same_length_lcs = []
-        if lcs_table[m][n-1] >= lcs_table[m-1][n]:
-            shorter_up_lcs = backtrack_all_lcs(lcs_table, seq1, seq2, m, n-1)
-            same_length_lcs.extend(shorter_up_lcs)
-        if lcs_table[m-1][n] >= lcs_table[m][n-1]:
-            shorter_left_lcs = backtrack_all_lcs(lcs_table, seq1, seq2, m-1, n)
-            same_length_lcs.extend(shorter_left_lcs)
-        return same_length_lcs
-
-
-#Finds one of the longest common subsequences of
-#two sequences using the given LCS table.
-def backtrack_lps(lps_table, seq, m, n):
-    if m == 0 or n == 0:
-        return list()
-    elif seq1[m-1] == seq2[n-1]:
-        lcs = backtrack_lcs(lcs_table, seq1, seq2, m-1, n-1)
-        lcs.append(seq1[m-1])
-        return lcs
-    else:
-        if lcs_table[m][n-1] >= lcs_table[m-1][n]:
-            return backtrack_lcs(lcs_table, seq1, seq2, m, n-1)
-        else:
-            return backtrack_lcs(lcs_table, seq1, seq2, m-1, n)
-
-
-#Finds the longest palindromic subsequence in the given sequence (or string).
-#Can find all the longest palindromic subsequences in the given sequence
-#(or string) by setting find_all to True (False by default).
-def longest_palindromic_subsequence(seq, find_all = False):
-    pass
-
-
-
-#Test
-seq = [10, 30, 5, 50, 70, 30, 40, 60, 60]
-print('Nondecreasig: ' +  str(find_lis(seq)))
-print('Strictly increasing: ' + str(find_lis(seq, True)))
-

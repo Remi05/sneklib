@@ -1,5 +1,5 @@
 #Author: Remi Pelletier
-#File:   rp_greedy.py
+#File:   greedy.py
 #Desc.:  Module containing miscellaneous greedy algorithms.
 
 
@@ -56,9 +56,3 @@ def knapsack_unbounded(max_weight, weights, values):
         value += nb_items * item[1]
         remainder -= nb_items * item[0]
     return total_value
-
-
-#Tests
-coins = {0.01, 0.05, 0.10, 0.25, 1.00}
-total = 1.47
-print(make_change(coins, total))

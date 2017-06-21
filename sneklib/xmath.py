@@ -1,12 +1,9 @@
 #Author: Remi Pelletier
-#File:   rp_math.py
+#File:   xmath.py
 #Desc.:  Module containing various functions related to mathematics.
 
 import math
 import time
-
-#TODO: Write proper tests.
-#TODO: Add additional pertinent functions.
 
 
 #Returns a set containing all the factors of x.
@@ -24,10 +21,6 @@ def factors(x):
 #Returns the greatest common divisor of a and b.
 def gcd(a, b):
     return gcd_mod_it(a, b)
-
-
-def gcd_binary(a, b):
-    pass #TODO
 
 
 #Computes the gcd of a and b iteratively using the modulus operator.
@@ -89,43 +82,3 @@ def modular_pow(b, e, m):
 def reduce_fraction(a, b):
     gcd_val = gcd(a, b)
     return a // gcd_val, b // gcd_val
-
-
-
-
-#-----------------------------------Tests--------------------------------------
-
-#_____factors() test_____
-#x = 60
-#print(factors(x))
-
-
-#_____gcd() test_____
-#a = 2940
-#b = 3150 
-#print(gcd(a, b))
-
-
-#_____lcm() test_____
-#a = 2940
-#b = 3150
-#print(lcm(a, b))
-
-
-#_____modular_pow() test_____
-#b = 5004759379182
-#e = 997179
-#m = 497914
-#start = time.time()
-#val1 = (b**e) % m
-#print(time.time()-start)
-#start = time.time()
-#val2 = modular_pow(b, e, m)
-#print(time.time()-start)
-#print("val1: {0}    val2: {1}".format(val1, val2))
-
-
-#_____reduce_fraction() test_____
-#a = 180
-#b = 240
-#print("{0}/{1} can be reduced to {2}/{3}".format(a, b, *(reduce_fraction(a,b))))
