@@ -187,6 +187,17 @@ def heap_sort(lst):
         i += 1
 
 
+#Sorts the elements in a list using Tree sort,
+#can sort in reverse order as well.
+def tree_sort(lst, reverse = False):
+    bst = trees.LinkedBST()
+    bst.insert_array(lst)
+    if reverse:
+        lst[:] = bst.get_reverse_array()
+    else:
+        lst[:] = bst.get_sorted_array()
+        
+
 #Merges the list to be sorted and the temporary list in the specified range
 #(used for sorting using merge_sort()).
 def _merge(lst, tmp, left, right, right_end):
