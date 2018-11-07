@@ -90,9 +90,9 @@ def upper_bound(arr, x, lo = 0, hi = -1):
 #and returns the start and end indices.
 def max_subarray_range(array):
     max_ending_here = 0
-    max_so_far      = 0
+    max_so_far = 0
     start = 0
-    end   = 0
+    end = 0
     for i in range(len(array)):
         if max_ending_here + array[i] <= 0:
             start = i + 1
