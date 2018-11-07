@@ -1,4 +1,4 @@
-#Author: Rémi Pelletier
+#Author: Remi Pelletier
 #File:   data_structures.py
 #Desc.:  A module containing my implementation of various data structures.
 
@@ -15,7 +15,6 @@ class ArrayBST:
         self._max_size = max(initial_size, 0)
         self._growth_rate = growth_rate if growth_rate > 1 else self.DEFAULT_GROWTH_RATE
         self._entries = [None for i in range(self._max_size)]
-
 
     #Returns the index of the parent of the
     #given node in the underlying array.
@@ -753,91 +752,9 @@ class MinMaxQueue:
             while not self._push_stack.empty():
                 self._pop_stack.push(self._push_stack.peek())
                 self._push_stack.pop()
-
-                
-
-#------------------------------------Trie--------------------------------------
-
-#Class used to represent a trie node.
-class TrieNode:
-    def __init__(self, char, ends_word = False, is_root = False):
-        self.char = char
-        self.ends_word = ends_word
-        self.is_root = is_root
-        self.children = dict()
-
-    #Appends the given string under the node (as children).
-    def add(self, string):
-        if string is None or len(string) == 0:
-            return
-        if not string[0] in self.children:
-            self.children[string[0]] = TrieNode(string[0])       
-        if len(string) == 1:
-            self.children[string[0]].ends_word = True
-        else:
-            self.children[string[0]].add(string[1:])
-
-    #Returns a boolean indicating if the given string has previously
-    #been added to the node (each character must be a sub-node and
-    #the last character must be a node which ends a word). 
-    def contains(self, string):
-        if string is None or len(string) == 0:
-            return False
-        if not string[0] in self.children:
-            return False
-        if len(string) == 1:
-            return self.children[string[0]].ends_word
-        return self.children[string[0]].contains(string[1:])
-
-    #Returns a boolean indicating if the given string
-    #is a prefix of any of the children of the node.
-    def is_prefix(self, string):
-        if string is None or len(string) == 0:
-            return False
-        if not string[0] in self.children:
-            return False
-        if len(string) == 1:
-            return True       
-        return self.children[string[0]].is_prefix(string[1:])
-
-    #Returns the length of the longest common prefix of
-    #the given string and the strings under the current node.
-    def longest_prefix_length(self, string):
-        if string is None or len(string) == 0 or not string[0] in self.children:
-            return 0
-        if len(string) == 1:
-            return 1
-        return self.children[string[0]].longest_prefix_length(string[1:]) + 1
+            
 
 
-#Trie data structure.
-class Trie:
-    def __init__(self):
-        self._root = TrieNode(None, is_root = True)
-
-    #Adds the given string in the trie.
-    def add(self, string):
-        self._root.add(string)
-
-    #Returns a boolean indicating if the given string
-    #is contained (has previously been added) in the trie.
-    def contains(self, string):
-        return self._root.contains(string)
-
-    #Returns a boolena indicating if the given string
-    #is a prefix of any previously added string.
-    def is_prefix(self, string):
-        return self._root.is_prefix(string)
-
-    #Returns the longest common prefix between the given string
-    #and any of the strings contained in the trie.
-    def longest_common_prefix(self, string):
-        return string[:self.longest_prefix_length(string)]
-
-    #Returns the length of the longest common prefix between the
-    #given string and any of the strings contained in the trie.
-    def longest_prefix_length(self, string):
-        return self._root.longest_prefix_length(string)
 
 
 
