@@ -35,8 +35,6 @@ def highest_set_bit(x):
 #set bit in the given number.
 #If no bit is set (x = 0), -1 is returned.
 def highest_set_bit_pos(x):
-    if x == 0:
-        return -1
     count = 0
     while x != 0:
         x >>= 1
