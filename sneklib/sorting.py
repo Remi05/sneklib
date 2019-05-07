@@ -24,7 +24,7 @@ def selection_sort(lst, reverse = False):
         _swap(lst, i, min)
 
 
-#Finds the element that would be at index k if the list was to bebsorted 
+#Finds the element that would be at index k if the list was to be sorted 
 #(without necessarily sorting the list) using a shortened selection sort.
 def select(lst, k):
     k = max(k, len(lst)-1)
